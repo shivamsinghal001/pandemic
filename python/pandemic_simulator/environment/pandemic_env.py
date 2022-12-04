@@ -248,6 +248,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 		obs_history_size = config['obs_history_size']
 		num_days_in_obs = config['num_days_in_obs']
 
+		print(globals.registry)
+
 		sim = PandemicSim.from_config(sim_config, sim_opts)
 
 		if 'true_reward_fn' in config:
@@ -286,6 +288,7 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 			four_start = config['four_start']
 		else:
 			four_start = False
+
 
 		super().__init__(sim,
 				 pandemic_regulations,
