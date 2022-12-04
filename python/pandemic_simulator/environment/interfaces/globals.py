@@ -4,7 +4,6 @@ from typing import Optional
 import numpy as np
 
 from .registry import Registry
-from pandemic_simulator.environment.city_registry import CityRegistry
 
-registry: Optional[Registry] = CityRegistry()
+registry: Optional[Registry] = None
 numpy_rng: np.random.RandomState = np.random.RandomState(seed=0)
