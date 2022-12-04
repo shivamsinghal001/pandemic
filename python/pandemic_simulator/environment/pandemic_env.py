@@ -236,6 +236,7 @@ class PandemicGymEnv(gym.Env):
 class PandemicPolicyGymEnv(PandemicGymEnv):
 
 	def __init__(self, config{}, kwargs**):
+		print('config')
 		config.update(kwargs)
 		sim_config = config['sim_config']
 		pandemic_regulations = config['pandemic_regulations']
