@@ -15,7 +15,7 @@ from .reward import RewardFunction, SumReward, RewardFunctionFactory, RewardFunc
 from .simulator_config import PandemicSimConfig
 from .simulator_opts import PandemicSimOpts
 
-from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
+from ray.tune.registry import register_env
 
 __all__ = ['PandemicGymEnv', 'PandemicPolicyGymEnv']
 
@@ -235,21 +235,56 @@ class PandemicGymEnv(gym.Env):
 
 class PandemicPolicyGymEnv(PandemicGymEnv):
 
-	def __init__(self,
-				 pandemic_sim: PandemicSim,
-				 pandemic_regulations: Sequence[PandemicRegulation],
-				 reward_fn: Optional[RewardFunction] = None,
-				 true_reward_fn: Optional[RewardFunction] = None,
-				 done_fn: Optional[DoneFunction] = None,
-				 obs_history_size: int = 1,
-				 num_days_in_obs: int = 1,
-				 sim_steps_per_regulation: int = 24,
-				 non_essential_business_location_ids: Optional[List[LocationID]] = None,
-				 constrain: bool = False,
-				 four_start: bool = False,
-				 ):
+	def __init__(self, config{}, kwargs**):
+		config.update(kwargs)
+		sim_config = config['sim_config']
+		pandemic_regulations = config['sim_config']
+		sim_opts = config['sim_opts']
+		reward_fn = config['reward_fn']
+		done_fn = config['done_fn']
+		obs_history_size = config['obs_history_size']
+		num_days_in_obs = config['num_days_in_obs']
 
-		super().__init__(pandemic_sim,
+		sim = PandemicSim.from_config(sim_config, sim_opts)
+
+		if 'true_reward_fn' in config:
+			true_reward_fn = config['true_reward_fn']
+		else:
+			true_reward_fn = SumReward(
+				reward_fns=[
+					RewardFunctionFactory.default(RewardFunctionType.INFECTION_SUMMARY_ABSOLUTE,
+												  summary_type=InfectionSummary.CRITICAL),
+					RewardFunctionFactory.default(RewardFunctionType.POLITICAL,
+												   summary_type=InfectionSummary.CRITICAL),
+					RewardFunctionFactory.default(RewardFunctionType.LOWER_STAGE,
+												  num_stages=len(pandemic_regulations)),
+					RewardFunctionFactory.default(RewardFunctionType.SMOOTH_STAGE_CHANGES,
+												  num_stages=len(pandemic_regulations))
+				],
+				weights=[10, 10, 0.1, 0.02]
+			)		
+
+		if 'sim_steps_per_regulation' in config:
+			sim_steps_per_regulation = config['sim_steps_per_regulation']
+		else:
+			sim_steps_per_regulation = 24
+
+		if 'non_essential_business_location_ids' in config:
+			non_essential_business_location_ids = config['non_essential_business_location_ids']
+		else:
+			non_essential_business_location_ids = None
+
+		if 'constrain' in config:
+			constrain = config['constrain']
+		else:
+			constrain = False
+
+		if 'four_start' in config:
+			four_start = config['four_start']
+		else:
+			four_start = False
+
+		super().__init__(sim,
 				 pandemic_regulations,
 				 reward_fn,
 				 true_reward_fn,
@@ -338,22 +373,5 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 							  constrain=constrain,
 							  four_start=four_start)
 
-	def get_single_env(self):
-		def get_self():
-			s = deepcopy(self)
-			s._pandemic_sim._numpy_rng=np.random.RandomState(0)
-			return s
+register_env("pandemic_env", lambda config: PandemicPolicyGymEnv(config))
 
-		e = DummyVecEnv([get_self])
-		obs = e.reset()
-		return e
-
-	def get_multi_env(self, n=10):
-		def get_self():
-			s = deepcopy(self)
-			s._pandemic_sim._numpy_rng=np.random.RandomState(np.random.randint(low=0,high=2**31))
-			return s
-
-		e = SubprocVecEnv([get_self for i in range(n)], start_method="fork")
-		obs = e.reset()
-		return e
