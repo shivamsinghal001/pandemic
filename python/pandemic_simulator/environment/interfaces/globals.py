@@ -4,6 +4,7 @@ from typing import Optional
 import numpy as np
 
 from .registry import Registry
+from .city_registry import *
 
-registry: Optional[Registry] = None
-numpy_rng: np.random.RandomState = np.random.RandomState()
+registry: Optional[Registry] = CityRegistry()
+numpy_rng: np.random.RandomState = np.random.RandomState(seed=0)
