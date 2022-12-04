@@ -15,6 +15,7 @@ from .reward import RewardFunction, SumReward, RewardFunctionFactory, RewardFunc
 from .simulator_config import PandemicSimConfig
 from .simulator_opts import PandemicSimOpts
 
+import pdb
 from ray.tune.registry import register_env
 
 __all__ = ['PandemicGymEnv', 'PandemicPolicyGymEnv']
@@ -237,6 +238,7 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 
 	def __init__(self, config{}, kwargs**):
 		print('config')
+		breakpoint()
 		config.update(kwargs)
 		sim_config = config['sim_config']
 		pandemic_regulations = config['pandemic_regulations']
