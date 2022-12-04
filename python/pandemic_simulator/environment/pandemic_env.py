@@ -238,8 +238,6 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 
 	def __init__(self, config={}, **kwargs):
 		config.update(kwargs)
-		print(config)
-		print('HERERERERERERERE')
 		sim_config = config['sim_config']
 		pandemic_regulations = config['pandemic_regulations']
 		sim_opts = config['sim_opts']
@@ -247,8 +245,6 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 		done_fn = config['done_fn']
 		obs_history_size = config['obs_history_size']
 		num_days_in_obs = config['num_days_in_obs']
-
-		print(globals.registry)
 
 		sim = PandemicSim.from_config(sim_config, sim_opts)
 
