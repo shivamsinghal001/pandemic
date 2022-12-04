@@ -238,7 +238,7 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 	def __init__(self, config{}, kwargs**):
 		config.update(kwargs)
 		sim_config = config['sim_config']
-		pandemic_regulations = config['sim_config']
+		pandemic_regulations = config['pandemic_regulations']
 		sim_opts = config['sim_opts']
 		reward_fn = config['reward_fn']
 		done_fn = config['done_fn']
