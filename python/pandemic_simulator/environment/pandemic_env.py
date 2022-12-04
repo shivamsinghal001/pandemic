@@ -237,7 +237,6 @@ class PandemicGymEnv(gym.Env):
 class PandemicPolicyGymEnv(PandemicGymEnv):
 
 	def __init__(self, config={}, **kwargs):
-		breakpoint()
 		config.update(kwargs)
 		print(config)
 		print('HERERERERERERERE')
