@@ -4,7 +4,6 @@
 from . import environment
 from . import script_helpers
 from . import utils
-from . import model
 from . import data
 from . import viz
 
