@@ -6,4 +6,4 @@ import numpy as np
 from .registry import Registry
 
 registry: Optional[Registry] = None
-numpy_rng: np.random.RandomState = np.random.RandomState()
+numpy_rng: np.random.RandomState = np.random.RandomState(seed=0)

@@ -13,3 +13,4 @@ env = environment
 sh = script_helpers
 init_globals = env.init_globals
 
+env.globals.registry = env.city_registry.CityRegistry()
