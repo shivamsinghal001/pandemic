@@ -78,7 +78,7 @@ class PandemicGymEnv(gym.Env):
 
 		self._obs_with_history = self.obs_to_numpy(PandemicObservation.create_empty(history_size=self._obs_history_size*self._num_days_in_obs))
 		self.observation_space = spaces.Box(
-			low=0, high=np.inf, shape=self._obs_with_history.shape
+			low=0, high=np.inf, shape=self._obs_with_history.shape, dtype=np.float64
 		)
 
 		self.constrain = constrain 
