@@ -5,6 +5,7 @@ from . import environment
 from . import script_helpers
 from . import utils
 from . import model
+from . import data
 
 env = environment
 sh = script_helpers
