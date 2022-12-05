@@ -17,6 +17,8 @@ from .simulator_opts import PandemicSimOpts
 
 import pdb
 from ray.tune.registry import register_env
+from ray.rllib.env.multi_agent_env import make_multi_agent
+
 
 __all__ = ['PandemicGymEnv', 'PandemicPolicyGymEnv']
 
@@ -376,4 +378,6 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 							  four_start=four_start)
 
 register_env("pandemic_env", lambda config: PandemicPolicyGymEnv(config))
-
+register_env(
+    "pandemic_env_multiagent", make_multi_agent(lambda config: PandemicPolicyGymEnv(config))
+)
