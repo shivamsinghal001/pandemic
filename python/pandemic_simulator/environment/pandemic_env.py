@@ -87,6 +87,7 @@ class PandemicGymEnv(gym.Env):
 		else:
 			self.action_space = gym.spaces.Discrete(len(self._stage_to_regulation))
 		self.four_start = four_start
+		breakpoint()
 
 
 	@classmethod
