@@ -1,6 +1,0 @@
-from ..data.interfaces import ExperimentDataSaver, StageSchedule
-from ..environment import PandemicRegulation, PandemicSimConfig, PandemicSimOpts
-from typing import List, Optional, Sequence, Union
-
-def seeded_experiment_main(exp_id: int, sim_config: PandemicSimConfig, sim_opts: PandemicSimOpts, data_saver: ExperimentDataSaver, pandemic_regulations: Optional[List[PandemicRegulation]] = ..., stages_to_execute: Union[int, Sequence[StageSchedule]] = ..., enable_warm_up: bool = ..., max_episode_length: int = ..., random_seed: int = ...) -> bool: ...
-def experiment_main(exp_id: int, sim_opts: PandemicSimOpts, sim_config: PandemicSimConfig, data_saver: ExperimentDataSaver, pandemic_regulations: Optional[List[PandemicRegulation]] = ..., stages_to_execute: Union[int, Sequence[StageSchedule]] = ..., enable_warm_up: bool = ..., max_episode_length: int = ..., num_random_seeds: int = ...) -> None: ...

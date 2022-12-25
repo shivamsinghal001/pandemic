@@ -1,3 +1,0 @@
-from ..interfaces import SimTimeTuple
-
-def get_work_time_for_24_7_open_locations() -> SimTimeTuple: ...
