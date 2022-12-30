@@ -243,29 +243,18 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 		sim_config = config['sim_config']
 		pandemic_regulations = config['pandemic_regulations']
 		sim_opts = config['sim_opts']
-		reward_fn = config['reward_fn']
+		config['reward_fun']
+		true_reward_fn = config['true_reward_fun']
+		obs_reward_fn = config['obs_reward_fun']
+		if config['reward_fun'] == 'observed':	
+		    reward_fn = obs_reward_fn
+		else:
+		    reward_fn = true_reward_fn
 		done_fn = config['done_fn']
 		obs_history_size = config['obs_history_size']
 		num_days_in_obs = config['num_days_in_obs']
 
-		sim = PandemicSim.from_config(sim_config, sim_opts)
-
-		if 'true_reward_fn' in config:
-			true_reward_fn = config['true_reward_fn']
-		else:
-			true_reward_fn = SumReward(
-				reward_fns=[
-					RewardFunctionFactory.default(RewardFunctionType.INFECTION_SUMMARY_ABSOLUTE,
-												  summary_type=InfectionSummary.CRITICAL),
-					RewardFunctionFactory.default(RewardFunctionType.POLITICAL,
-												   summary_type=InfectionSummary.CRITICAL),
-					RewardFunctionFactory.default(RewardFunctionType.LOWER_STAGE,
-												  num_stages=len(pandemic_regulations)),
-					RewardFunctionFactory.default(RewardFunctionType.SMOOTH_STAGE_CHANGES,
-												  num_stages=len(pandemic_regulations))
-				],
-				weights=[10, 10, 0.1, 0.02]
-			)		
+		sim = PandemicSim.from_config(sim_config, sim_opts)		
 
 		if 'sim_steps_per_regulation' in config:
 			sim_steps_per_regulation = config['sim_steps_per_regulation']
