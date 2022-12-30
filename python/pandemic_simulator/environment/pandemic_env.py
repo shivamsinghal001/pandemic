@@ -209,7 +209,7 @@ class PandemicGymEnv(gym.Env):
 		done = self._done_fn.calculate_done(obs, action) if self._done_fn else False
 		self._last_observation = obs
 		self._obs_with_history = np.concatenate([self._obs_with_history[self._obs_history_size:], self.obs_to_numpy(self._last_observation)])
-		return self._obs_with_history, self._last_reward, done, {"rew": last_rew_breakdown, "true_rew": last_true_rew_breakdown}
+		return self._obs_with_history, self._last_reward, done, {"rew": self._last_reward, "true_rew": self._last_true_reward}
 		
 
 	def reset(self) -> np.ndarray:
