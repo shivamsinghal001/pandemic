@@ -298,34 +298,43 @@ class PandemicSim:
                 person1_state.not_infection_probability_delta_history.append((person1_state.current_location,
                                                                         person1_state.not_infection_probability_delta))
 
+    def _test_result_to_infection_summary(
+        self,
+        new_result: PandemicTestResult,
+        prev_result: Optional[PandemicTestResult] = None,
+    ) -> InfectionSummary:
+        if new_result == PandemicTestResult.UNTESTED:
+            return InfectionSummary.NONE
+        elif new_result == PandemicTestResult.NEGATIVE:
+            if prev_result in [PandemicTestResult.POSITIVE, PandemicTestResult.CRITICAL]:
+                return InfectionSummary.RECOVERED
+            else:
+                return InfectionSummary.NONE
+        elif new_result == PandemicTestResult.POSITIVE:
+            return InfectionSummary.INFECTED
+        elif new_result == PandemicTestResult.CRITICAL:
+            return InfectionSummary.CRITICAL
+        elif new_result == PandemicTestResult.DEAD:
+            return InfectionSummary.DEAD
+
     def _update_global_testing_state(self, state: GlobalTestingState, new_result: PandemicTestResult, prev_result: PandemicTestResult) -> None:
         if new_result == prev_result:
             # nothing to update
             return
 
-            # person died - just update the test summary and __not__ the num_tests
-        if new_result == PandemicTestResult.DEAD and prev_result != PandemicTestResult.DEAD:
-            prv = InfectionSummary.CRITICAL if prev_result == PandemicTestResult.CRITICAL else \
-                InfectionSummary.INFECTED if prev_result == PandemicTestResult.POSITIVE else InfectionSummary.NONE
-            state.summary[InfectionSummary.DEAD] += 1
-            state.summary[prv] -= 1
+        new_summary = self._test_result_to_infection_summary(new_result, prev_result)
+        prev_summary = self._test_result_to_infection_summary(prev_result)
 
-        # person tested positive/critical
-        elif (new_result in {PandemicTestResult.POSITIVE, PandemicTestResult.CRITICAL} and
-              prev_result in {PandemicTestResult.POSITIVE, PandemicTestResult.NEGATIVE, PandemicTestResult.UNTESTED}):
-            new = InfectionSummary.CRITICAL if new_result == PandemicTestResult.CRITICAL else InfectionSummary.INFECTED
-            prv = InfectionSummary.INFECTED if prev_result == PandemicTestResult.POSITIVE else InfectionSummary.NONE
-            state.summary[new] += 1
-            state.summary[prv] -= 1
-            state.num_tests += 1  # update number of tests
+        if prev_summary == InfectionSummary.NONE and state.summary[prev_summary] == 0:
+            prev_summary = InfectionSummary.RECOVERED
+        assert state.summary[prev_summary] > 0
 
-        # person tested negative after having tested as infected before
-        elif (new_result == PandemicTestResult.NEGATIVE and
-              prev_result in {PandemicTestResult.POSITIVE, PandemicTestResult.CRITICAL}):
-            prv = InfectionSummary.CRITICAL if prev_result == PandemicTestResult.CRITICAL else InfectionSummary.INFECTED
-            state.summary[InfectionSummary.RECOVERED] += 1
-            state.summary[prv] -= 1
-            state.num_tests += 1  # update number of tests
+        state.summary[new_summary] += 1
+        state.summary[prev_summary] -= 1
+        state.num_tests += 1  # update number of tests
+
+        if new_result != PandemicTestResult.DEAD:
+            state.num_tests += 1
 
     # def poll(self) -> np.ndarray:
     #     """Returns an observation of the current state of the simulator. Used to update regulation specifics."""
@@ -449,6 +458,36 @@ class PandemicSim:
 
         # call sim time step
         self._state.sim_time.step()
+
+        self._check_testing_state()
+
+    def _check_testing_state(self):
+        testing_state: GlobalTestingState
+        for test_result_attr, testing_state in [
+            ("test_result", self._state.global_testing_state),
+            ("test_result_alpha", self._state.global_testing_state_alpha),
+            ("test_result_delta", self._state.global_testing_state_delta),
+        ]:
+            expected_summary = {k: 0 for k in InfectionSummary}
+            for person in self._id_to_person.values():
+                test_result: PandemicTestResult = getattr(person.state, test_result_attr)
+                if test_result == PandemicTestResult.UNTESTED or test_result == PandemicTestResult.NEGATIVE:
+                    expected_summary[InfectionSummary.NONE] += 1
+                elif test_result == PandemicTestResult.POSITIVE:
+                    expected_summary[InfectionSummary.INFECTED] += 1
+                elif test_result == PandemicTestResult.CRITICAL:
+                    expected_summary[InfectionSummary.CRITICAL] += 1
+                elif test_result == PandemicTestResult.DEAD:
+                    expected_summary[InfectionSummary.DEAD] += 1
+            assert (
+                expected_summary[InfectionSummary.NONE] == (
+                    testing_state.summary[InfectionSummary.NONE]
+                    + testing_state.summary[InfectionSummary.RECOVERED]
+                )
+                and expected_summary[InfectionSummary.INFECTED] == testing_state.summary[InfectionSummary.INFECTED]
+                and expected_summary[InfectionSummary.CRITICAL] == testing_state.summary[InfectionSummary.CRITICAL]
+                and expected_summary[InfectionSummary.DEAD] == testing_state.summary[InfectionSummary.DEAD]
+            )
 
     def step_day(self, hours_in_a_day: int = 24) -> None:
         for _ in range(hours_in_a_day):
