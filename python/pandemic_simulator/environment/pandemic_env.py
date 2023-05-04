@@ -9,7 +9,7 @@ from gym import spaces
 from ray.rllib.env.multi_agent_env import make_multi_agent
 from ray.tune.registry import register_env
 
-from ..data import StageSchedule
+from .interfaces import StageSchedule
 from .done import DoneFunction
 from .interfaces import (InfectionSummary, LocationID,
                          NonEssentialBusinessLocationState,

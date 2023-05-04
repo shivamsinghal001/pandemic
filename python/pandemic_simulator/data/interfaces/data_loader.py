@@ -7,7 +7,7 @@ from typing import List, Optional, Sequence
 import numpy as np
 
 from ...environment import PandemicObservation, PandemicSimOpts
-from .stage_schedule import StageSchedule
+from ...environment.interfaces.stage_schedule import StageSchedule
 
 __all__ = ["ExperimentResult", "ExperimentDataLoader"]
 

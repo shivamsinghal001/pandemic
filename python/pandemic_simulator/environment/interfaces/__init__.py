@@ -2,6 +2,7 @@
 # flake8: noqa
 
 from . import globals
+from .stage_schedule import *
 from .contact_tracer import *
 from .ids import *
 from .infection_model import *
