@@ -16,6 +16,7 @@ from .interfaces import (
     InfectionSummary,
     sorted_infection_summary,
 )
+from ..data import StageSchedule
 from .pandemic_sim import PandemicSim
 from .reward import RewardFunction, SumReward, RewardFunctionFactory, RewardFunctionType
 from .simulator_config import PandemicSimConfig
@@ -27,6 +28,45 @@ from ray.rllib.env.multi_agent_env import make_multi_agent
 
 
 __all__ = ["PandemicGymEnv", "PandemicPolicyGymEnv"]
+
+baseline_policies = {
+    "S0": 0,
+    "S1": 1,
+    "S2": 2,
+    "S3": 3,
+    "S4": 4,
+    "S0-4-0": [
+        StageSchedule(stage=4, end_day=30),
+        StageSchedule(stage=0, end_day=None),
+    ],
+    "S0-4-0-FI": [
+        StageSchedule(stage=4, end_day=30),
+        StageSchedule(stage=3, end_day=35),
+        StageSchedule(stage=2, end_day=40),
+        StageSchedule(stage=1, end_day=45),
+        StageSchedule(stage=0, end_day=None),
+    ],
+    "S0-4-0-GI": [
+        StageSchedule(stage=4, end_day=30),
+        StageSchedule(stage=3, end_day=50),
+        StageSchedule(stage=2, end_day=70),
+        StageSchedule(stage=1, end_day=90),
+        StageSchedule(stage=0, end_day=None),
+    ],
+    "swedish_strategy": [
+        StageSchedule(stage=0, end_day=3),
+        StageSchedule(stage=1, end_day=None),
+    ],
+    "italian_strategy": [
+        StageSchedule(stage=0, end_day=3),
+        StageSchedule(stage=1, end_day=8),
+        StageSchedule(stage=2, end_day=13),
+        StageSchedule(stage=3, end_day=25),
+        StageSchedule(stage=4, end_day=59),
+        StageSchedule(stage=3, end_day=79),
+        StageSchedule(stage=2, end_day=None),
+    ],
+}
 
 
 class PandemicGymEnv(gym.Env):
@@ -58,6 +98,8 @@ class PandemicGymEnv(gym.Env):
         non_essential_business_location_ids: Optional[List[LocationID]] = None,
         constrain: bool = False,
         four_start: bool = False,
+        is_baseline=False,
+        baseline_policy=None,
     ):
         """
         :param pandemic_sim: Pandemic simulator instance
@@ -85,6 +127,18 @@ class PandemicGymEnv(gym.Env):
         self._reward_fn = reward_fn
         self._true_reward_fn = true_reward_fn
         self._proxy_reward_fn = proxy_reward_fn
+        self._is_baseline = is_baseline
+        self._baseline_policy = baseline_policy
+        if self._is_baseline:
+            assert self._baseline_policy in baseline_policies
+            stages_to_execute = baseline_policies[self._baseline_policy]
+            self.stages = (
+                [StageSchedule(stage=stages_to_execute, end_day=None)]
+                if isinstance(stages_to_execute, int)
+                else stages_to_execute
+            )
+            self.stage_idx = 0
+
         self._done_fn = done_fn
 
         self._obs_with_history = self.obs_to_numpy(
@@ -182,7 +236,7 @@ class PandemicGymEnv(gym.Env):
     @property
     def get_true_reward(self) -> float:
         return self._last_true_reward
-    
+
     @property
     def get_proxy_reward(self) -> float:
         return self._last_proxy_reward
@@ -204,6 +258,19 @@ class PandemicGymEnv(gym.Env):
         )
 
     def step(self, action: int) -> Tuple[PandemicObservation, float, bool, Dict]:
+        if self._is_baseline:
+            cur_stage = self.stages[self.stage_idx]
+            stage = cur_stage.stage
+            if (
+                cur_stage.end_day is not None
+                and cur_stage.end_day <= self._last_observation.state.sim_time.day
+            ):
+                self.stage_idx += 1
+            return self._step(stage)
+        else:
+            return self._step(action)
+
+    def _step(self, action: int) -> Tuple[PandemicObservation, float, bool, Dict]:
         # assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
 
         # execute the action if different from the current stage
@@ -267,7 +334,7 @@ class PandemicGymEnv(gym.Env):
             if self._true_reward_fn is not None
             else 0.0
         )
-        self._last_proxy_reward, last_proxy_rew_breakdown =  (
+        self._last_proxy_reward, last_proxy_rew_breakdown = (
             self._proxy_reward_fn.calculate_reward(prev_obs, action, obs)
             if self._proxy_reward_fn is not None
             else 0.0
@@ -338,6 +405,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             reward_fn = proxy_reward_fn
         else:
             reward_fn = true_reward_fn
+        is_baseline = config["is_baseline"]
+        baseline_policy = config["baseline_policy"]
         done_fn = config["done_fn"]
         obs_history_size = config["obs_history_size"]
         num_days_in_obs = config["num_days_in_obs"]
@@ -379,6 +448,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             non_essential_business_location_ids,
             constrain,
             four_start,
+            is_baseline,
+            baseline_policy,
         )
 
     @classmethod
