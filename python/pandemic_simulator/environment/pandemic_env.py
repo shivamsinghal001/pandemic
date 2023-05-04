@@ -50,6 +50,7 @@ class PandemicGymEnv(gym.Env):
         pandemic_regulations: Sequence[PandemicRegulation],
         reward_fn: Optional[RewardFunction] = None,
         true_reward_fn: Optional[RewardFunction] = None,
+        proxy_reward_fn: Optional[RewardFunction] = None,
         done_fn: Optional[DoneFunction] = None,
         obs_history_size: int = 1,
         num_days_in_obs: int = 1,
@@ -83,6 +84,7 @@ class PandemicGymEnv(gym.Env):
 
         self._reward_fn = reward_fn
         self._true_reward_fn = true_reward_fn
+        self._proxy_reward_fn = proxy_reward_fn
         self._done_fn = done_fn
 
         self._obs_with_history = self.obs_to_numpy(
@@ -180,6 +182,10 @@ class PandemicGymEnv(gym.Env):
     @property
     def get_true_reward(self) -> float:
         return self._last_true_reward
+    
+    @property
+    def get_proxy_reward(self) -> float:
+        return self._last_proxy_reward
 
     @property
     def get_true_reward2(self) -> float:
@@ -261,6 +267,11 @@ class PandemicGymEnv(gym.Env):
             if self._true_reward_fn is not None
             else 0.0
         )
+        self._last_proxy_reward, last_proxy_rew_breakdown =  (
+            self._proxy_reward_fn.calculate_reward(prev_obs, action, obs)
+            if self._proxy_reward_fn is not None
+            else 0.0
+        )
         done = self._done_fn.calculate_done(obs, action) if self._done_fn else False
         self._last_observation = obs
         self._obs_with_history = np.concatenate(
@@ -276,8 +287,10 @@ class PandemicGymEnv(gym.Env):
             {
                 "rew": self._last_reward,
                 "true_rew": self._last_true_reward,
+                "proxy_rew": self._last_proxy_reward,
                 "rew_breakdown": last_rew_breakdown,
                 "true_rew_breakdown": last_true_rew_breakdown,
+                "proxy_rew_breakdown": last_proxy_rew_breakdown,
             },
         )
 
@@ -358,6 +371,7 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             pandemic_regulations,
             reward_fn,
             true_reward_fn,
+            proxy_reward_fn,
             done_fn,
             obs_history_size,
             num_days_in_obs,
@@ -447,12 +461,38 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             weights=[10, 10, 0.1, 0.02],
         )
 
+        proxy_reward_fn = reward_fn or SumReward(
+            reward_fns=[
+                RewardFunctionFactory.default(
+                    RewardFunctionType.INFECTION_SUMMARY_ABOVE_THRESHOLD,
+                    summary_type=InfectionSummary.CRITICAL,
+                    threshold=sim_config.max_hospital_capacity / sim_config.num_persons,
+                ),
+                RewardFunctionFactory.default(
+                    RewardFunctionType.INFECTION_SUMMARY_ABOVE_THRESHOLD,
+                    summary_type=InfectionSummary.CRITICAL,
+                    threshold=3
+                    * sim_config.max_hospital_capacity
+                    / sim_config.num_persons,
+                ),
+                RewardFunctionFactory.default(
+                    RewardFunctionType.LOWER_STAGE, num_stages=len(pandemic_regulations)
+                ),
+                RewardFunctionFactory.default(
+                    RewardFunctionType.SMOOTH_STAGE_CHANGES,
+                    num_stages=len(pandemic_regulations),
+                ),
+            ],
+            weights=[alpha, beta, gamma, delta],
+        )
+
         return PandemicPolicyGymEnv(
             pandemic_sim=sim,
             pandemic_regulations=pandemic_regulations,
             sim_steps_per_regulation=sim_opts.sim_steps_per_regulation,
             reward_fn=reward_fn,
             true_reward_fn=true_reward_fn,
+            proxy_reward_fn=proxy_reward_fn,
             done_fn=done_fn,
             obs_history_size=obs_history_size,
             non_essential_business_location_ids=non_essential_business_location_ids,
