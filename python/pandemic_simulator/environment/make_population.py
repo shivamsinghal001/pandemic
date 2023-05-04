@@ -4,19 +4,13 @@ from uuid import uuid4
 
 import numpy as np
 
-from .interfaces import (
-    globals,
-    Risk,
-    Person,
-    PersonID,
-    PersonState,
-    BusinessBaseLocation,
-)
+from ..utils import cluster_into_random_sized_groups
+from .interfaces import (BusinessBaseLocation, Person, PersonID, PersonState,
+                         Risk, globals)
 from .job_counselor import JobCounselor
 from .location import Home, School
-from .person import Retired, Worker, Minor
+from .person import Minor, Retired, Worker
 from .simulator_config import PandemicSimConfig
-from ..utils import cluster_into_random_sized_groups
 
 __all__ = ["make_population"]
 

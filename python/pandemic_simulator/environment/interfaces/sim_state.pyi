@@ -1,3 +1,5 @@
+from typing import Dict, Mapping, Tuple, Type
+
 from .ids import LocationID, PersonID
 from .infection_model import InfectionSummary
 from .location import LocationSummary
@@ -5,7 +7,6 @@ from .location_states import LocationState
 from .pandemic_testing import GlobalTestingState
 from .person import PersonState
 from .sim_time import SimTime
-from typing import Dict, Mapping, Tuple, Type
 
 class PandemicSimState:
     id_to_person_state: Dict[PersonID, PersonState]

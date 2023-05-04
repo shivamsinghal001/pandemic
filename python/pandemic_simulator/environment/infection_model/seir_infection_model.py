@@ -8,14 +8,9 @@ from typing import Any, Dict, Optional, Tuple, cast
 import numpy as np
 from scipy.stats import truncnorm
 
-from ..interfaces import (
-    IndividualInfectionState,
-    InfectionModel,
-    InfectionSummary,
-    Risk,
-    globals,
-)
 from ...utils import required
+from ..interfaces import (IndividualInfectionState, InfectionModel,
+                          InfectionSummary, Risk, globals)
 
 __all__ = ["SEIRInfectionState", "SEIRModel", "SpreadProbabilityParams"]
 

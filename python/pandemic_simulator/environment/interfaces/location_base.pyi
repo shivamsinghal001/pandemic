@@ -1,10 +1,12 @@
+from abc import ABCMeta
+from typing import Optional, Union
+
+from _typeshed import Incomplete
+
 from .ids import LocationID, PersonID
 from .location import Location
 from .location_rules import LocationRule
 from .sim_time import SimTime
-from _typeshed import Incomplete
-from abc import ABCMeta
-from typing import Optional, Union
 
 class BaseLocation(Location[_State], metaclass=ABCMeta):
     location_rule_type: Incomplete

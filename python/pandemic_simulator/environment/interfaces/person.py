@@ -2,11 +2,11 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Optional, Sequence, List, Tuple, cast
+from typing import List, Optional, Sequence, Tuple, cast
 
 from .contact_tracer import ContactTracer
-from .ids import PersonID, LocationID
-from .infection_model import IndividualInfectionState, Risk, InfectionSummary
+from .ids import LocationID, PersonID
+from .infection_model import IndividualInfectionState, InfectionSummary, Risk
 from .pandemic_testing_result import PandemicTestResult
 from .pandemic_types import NoOP
 from .regulation import PandemicRegulation

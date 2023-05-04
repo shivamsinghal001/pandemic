@@ -1,14 +1,14 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 
 from abc import ABC, abstractmethod
-from typing import List, Optional, Set, Mapping, Tuple, Union
+from typing import List, Mapping, Optional, Set, Tuple, Union
 
 from .ids import LocationID, PersonID
 from .infection_model import InfectionSummary
 from .location import Location, LocationSummary
 from .pandemic_testing_result import PandemicTestResult
 from .person import Person
-from .sim_time import SimTimeTuple, SimTime
+from .sim_time import SimTime, SimTimeTuple
 
 __all__ = ["Registry", "RegistrationError"]
 

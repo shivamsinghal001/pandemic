@@ -1,7 +1,8 @@
 import enum
-from .interfaces import InfectionSummary, PandemicObservation
 from abc import ABCMeta, abstractmethod
 from typing import Any, List, Optional, Sequence, Union
+
+from .interfaces import InfectionSummary, PandemicObservation
 
 class RewardFunction(metaclass=ABCMeta):
     def __init__(self, *args: Any, **kwargs: Any) -> None: ...

@@ -1,11 +1,7 @@
-from ..interfaces import (
-    BaseLocation,
-    ContactRate,
-    LocationRule,
-    LocationState,
-    PersonID,
-)
 from _typeshed import Incomplete
+
+from ..interfaces import (BaseLocation, ContactRate, LocationRule,
+                          LocationState, PersonID)
 
 class CemeteryRule(LocationRule):
     def __post_init__(self) -> None: ...

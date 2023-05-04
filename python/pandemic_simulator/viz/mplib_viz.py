@@ -1,9 +1,8 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 import string
-from inspect import ismethod
-from typing import List, Any, Dict, Optional, Sequence, Type
-
 from datetime import datetime
+from inspect import ismethod
+from typing import Any, Dict, List, Optional, Sequence, Type
 
 import numpy as np
 from cycler import cycler
@@ -11,14 +10,10 @@ from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.ticker import MaxNLocator
 
+from ..environment import (InfectionSummary, PandemicObservation,
+                           PandemicSimConfig, PandemicSimState)
 from .evaluation_plots import inf_colors
 from .pandemic_viz import PandemicViz
-from ..environment import (
-    PandemicObservation,
-    InfectionSummary,
-    PandemicSimState,
-    PandemicSimConfig,
-)
 
 __all__ = ["BaseMatplotLibViz", "SimViz", "GymViz", "PlotType"]
 

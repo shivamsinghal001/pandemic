@@ -1,3 +1,4 @@
+from . import globals as globals
 from .contact_tracer import *
 from .ids import *
 from .infection_model import *
@@ -17,4 +18,3 @@ from .regulation import *
 from .sim_state import *
 from .sim_state_consumer import *
 from .sim_time import *
-from . import globals as globals

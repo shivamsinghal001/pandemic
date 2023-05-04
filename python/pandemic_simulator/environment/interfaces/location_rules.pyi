@@ -1,7 +1,8 @@
+from typing import Optional, Union
+
 from .location_states import ContactRate
 from .pandemic_types import Default
 from .sim_time import SimTimeTuple
-from typing import Optional, Union
 
 class LocationRule:
     contact_rate: Union[ContactRate, Default, None]

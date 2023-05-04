@@ -1,14 +1,8 @@
-from ..interfaces import (
-    ContactTracer,
-    LocationID,
-    NoOP,
-    PersonID,
-    PersonRoutine,
-    PersonState,
-    SimTime,
-)
-from .base import BasePerson
 from typing import Optional, Sequence
+
+from ..interfaces import (ContactTracer, LocationID, NoOP, PersonID,
+                          PersonRoutine, PersonState, SimTime)
+from .base import BasePerson
 
 class Retired(BasePerson):
     def __init__(

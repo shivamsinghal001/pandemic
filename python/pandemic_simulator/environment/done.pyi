@@ -1,7 +1,8 @@
 import enum
-from .interfaces import InfectionSummary, PandemicObservation
 from abc import ABCMeta, abstractmethod
 from typing import Any, List, Union
+
+from .interfaces import InfectionSummary, PandemicObservation
 
 class DoneFunction(metaclass=ABCMeta):
     def __init__(self, *args: Any, **kwargs: Any) -> None: ...

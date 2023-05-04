@@ -3,14 +3,14 @@
 import dataclasses
 from collections import OrderedDict
 from pathlib import Path
-from typing import Sequence, Set, Tuple, Any
+from typing import Any, Sequence, Set, Tuple
 
 import h5py as h5
 import numpy as np
-
 from pandemic_simulator.environment import PandemicObservation
-from .interfaces import ExperimentDataLoader, ExperimentResult, StageSchedule
+
 from ..environment import PandemicSimOpts
+from .interfaces import ExperimentDataLoader, ExperimentResult, StageSchedule
 
 __all__ = ["H5DataLoader"]
 

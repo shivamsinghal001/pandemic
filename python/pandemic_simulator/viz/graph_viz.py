@@ -1,12 +1,12 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
-from typing import List, Any
+from typing import Any, List
 
 import networkx
 from matplotlib import pyplot as plt
 
-from .pandemic_viz import PandemicViz
-from ..environment import PandemicObservation, PandemicSimState, PandemicSim
+from ..environment import PandemicObservation, PandemicSim, PandemicSimState
 from ..utils import checked_cast
+from .pandemic_viz import PandemicViz
 
 __all__ = ["GraphViz"]
 

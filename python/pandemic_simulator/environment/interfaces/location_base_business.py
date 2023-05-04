@@ -1,15 +1,13 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from abc import ABCMeta
-from typing import cast, Tuple, Type, TypeVar, ClassVar
+from typing import ClassVar, Tuple, Type, TypeVar, cast
 
 from .ids import PersonID
 from .location_base import BaseLocation
-from .location_rules import (
-    LocationRule,
-    BusinessLocationRule,
-    NonEssentialBusinessLocationRule,
-)
-from .location_states import BusinessLocationState, NonEssentialBusinessLocationState
+from .location_rules import (BusinessLocationRule, LocationRule,
+                             NonEssentialBusinessLocationRule)
+from .location_states import (BusinessLocationState,
+                              NonEssentialBusinessLocationState)
 from .pandemic_types import DEFAULT
 from .sim_time import SimTime, SimTimeTuple
 

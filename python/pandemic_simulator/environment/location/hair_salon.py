@@ -1,12 +1,8 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from dataclasses import dataclass
 
-from ..interfaces import (
-    NonEssentialBusinessLocationState,
-    ContactRate,
-    SimTimeTuple,
-    NonEssentialBusinessBaseLocation,
-)
+from ..interfaces import (ContactRate, NonEssentialBusinessBaseLocation,
+                          NonEssentialBusinessLocationState, SimTimeTuple)
 
 __all__ = ["HairSalon", "HairSalonState"]
 

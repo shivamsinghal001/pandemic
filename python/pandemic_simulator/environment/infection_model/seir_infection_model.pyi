@@ -1,6 +1,7 @@
-from ..interfaces import IndividualInfectionState, InfectionModel, Risk
 from enum import Enum
 from typing import Dict, Optional, Tuple
+
+from ..interfaces import IndividualInfectionState, InfectionModel, Risk
 
 class _SEIRLabel(Enum):
     susceptible: str

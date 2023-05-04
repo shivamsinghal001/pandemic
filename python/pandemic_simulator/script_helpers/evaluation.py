@@ -2,12 +2,14 @@
 import dataclasses
 import os
 from pathlib import Path
-from typing import Dict, Optional, Sequence, Union, List
+from typing import Dict, List, Optional, Sequence, Union
 
-from .experiments import experiment_main
-from .sim_configs import small_town_config, medium_town_config, above_medium_town_config
 from ..data import H5DataSaver, StageSchedule
-from ..environment import PandemicSimOpts, PandemicSimConfig, PandemicRegulation, Risk
+from ..environment import (PandemicRegulation, PandemicSimConfig,
+                           PandemicSimOpts, Risk)
+from .experiments import experiment_main
+from .sim_configs import (above_medium_town_config, medium_town_config,
+                          small_town_config)
 
 __all__ = [
     "EvaluationOpts",

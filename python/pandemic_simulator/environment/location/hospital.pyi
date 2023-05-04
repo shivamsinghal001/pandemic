@@ -1,11 +1,9 @@
-from ..interfaces import (
-    BusinessBaseLocation,
-    BusinessLocationState,
-    PersonID,
-    SimTimeTuple,
-)
-from _typeshed import Incomplete
 from typing import Set
+
+from _typeshed import Incomplete
+
+from ..interfaces import (BusinessBaseLocation, BusinessLocationState,
+                          PersonID, SimTimeTuple)
 
 class HospitalState(BusinessLocationState):
     patient_capacity: int

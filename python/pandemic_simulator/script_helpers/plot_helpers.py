@@ -3,21 +3,19 @@ import os
 import string
 import warnings
 from pathlib import Path
-from typing import Optional, Sequence, Union, Tuple
+from typing import Optional, Sequence, Tuple, Union
 
 import numpy as np
-from matplotlib import pyplot as plt, gridspec
+from matplotlib import gridspec
+from matplotlib import pyplot as plt
 from matplotlib.gridspec import GridSpec
 from mpl_toolkits.mplot3d import Axes3D
 
+from ..data import ExperimentResult, H5DataLoader
+from ..environment import PandemicSimConfig, sorted_infection_summary
+from ..viz import (plot_critical_summary, plot_global_infection_summary,
+                   plot_multi_params_summary)
 from .sim_configs import small_town_config
-from ..data import H5DataLoader, ExperimentResult
-from ..environment import sorted_infection_summary, PandemicSimConfig
-from ..viz import (
-    plot_global_infection_summary,
-    plot_critical_summary,
-    plot_multi_params_summary,
-)
 
 __all__ = ["make_evaluation_plots_from_data", "make_evaluation_plots"]
 

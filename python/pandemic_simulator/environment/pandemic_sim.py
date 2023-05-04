@@ -1,48 +1,24 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 
-from collections import defaultdict, OrderedDict
-from itertools import product as cartesianproduct, combinations
-from typing import DefaultDict, Dict, List, Optional, Sequence, cast, Type
+from collections import OrderedDict, defaultdict
+from itertools import combinations
+from itertools import product as cartesianproduct
+from typing import DefaultDict, Dict, List, Optional, Sequence, Type, cast
 
 import numpy as np
 from orderedset import OrderedSet
 
 from .contact_tracing import MaxSlotContactTracer
 from .infection_model import SEIRModel, SpreadProbabilityParams
-from .interfaces import (
-    ContactRate,
-    ContactTracer,
-    PandemicRegulation,
-    PandemicSimState,
-    PandemicTesting,
-    PandemicTestResult,
-    get_infection_summary,
-    DEFAULT,
-    GlobalTestingState,
-    InfectionModel,
-    InfectionSummary,
-    Location,
-    LocationID,
-    Person,
-    PersonID,
-    Registry,
-    SimTime,
-    SimTimeInterval,
-    sorted_infection_summary,
-    globals,
-    PersonRoutineAssignment,
-)
-from .location import (
-    Home,
-    GroceryStore,
-    Office,
-    School,
-    Hospital,
-    RetailStore,
-    HairSalon,
-    Restaurant,
-    Bar,
-)
+from .interfaces import (DEFAULT, ContactRate, ContactTracer,
+                         GlobalTestingState, InfectionModel, InfectionSummary,
+                         Location, LocationID, PandemicRegulation,
+                         PandemicSimState, PandemicTesting, PandemicTestResult,
+                         Person, PersonID, PersonRoutineAssignment, Registry,
+                         SimTime, SimTimeInterval, get_infection_summary,
+                         globals, sorted_infection_summary)
+from .location import (Bar, GroceryStore, HairSalon, Home, Hospital, Office,
+                       Restaurant, RetailStore, School)
 from .make_population import make_population
 from .pandemic_testing_strategies import RandomPandemicTesting
 from .simulator_config import PandemicSimConfig

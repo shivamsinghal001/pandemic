@@ -1,9 +1,10 @@
 import abc
+from abc import ABC, abstractmethod
+from typing import Dict
+
 from .infection_model import InfectionSummary
 from .pandemic_testing_result import PandemicTestResult
 from .person import PersonState
-from abc import ABC, abstractmethod
-from typing import Dict
 
 class GlobalTestingState:
     summary: Dict[InfectionSummary, int]

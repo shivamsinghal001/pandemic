@@ -1,8 +1,8 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 
 import enum
-from abc import abstractmethod, ABCMeta
-from typing import Any, Dict, List, Optional, Union, Type, Sequence
+from abc import ABCMeta, abstractmethod
+from typing import Any, Dict, List, Optional, Sequence, Type, Union
 
 import numpy as np
 
@@ -22,7 +22,8 @@ __all__ = [
     "PoliticalReward",
 ]
 
-from .interfaces import PandemicObservation, InfectionSummary, sorted_infection_summary
+from .interfaces import (InfectionSummary, PandemicObservation,
+                         sorted_infection_summary)
 
 
 class RewardFunction(metaclass=ABCMeta):

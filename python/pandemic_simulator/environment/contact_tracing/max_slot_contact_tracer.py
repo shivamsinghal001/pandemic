@@ -1,9 +1,9 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 
-from orderedset import OrderedSet
 from typing import Dict, FrozenSet, List, Mapping, Set
 
 import numpy as np
+from orderedset import OrderedSet
 
 from ..interfaces import ContactTracer, PersonID
 

@@ -1,5 +1,6 @@
-import numpy as np
 from typing import Any, Dict, List, Type
+
+import numpy as np
 
 def required() -> _T: ...
 def abstract_class_property() -> _T: ...

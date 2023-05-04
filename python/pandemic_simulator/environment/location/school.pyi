@@ -1,10 +1,7 @@
-from ..interfaces import (
-    ContactRate,
-    NonEssentialBusinessBaseLocation,
-    NonEssentialBusinessLocationState,
-    SimTimeTuple,
-)
 from _typeshed import Incomplete
+
+from ..interfaces import (ContactRate, NonEssentialBusinessBaseLocation,
+                          NonEssentialBusinessLocationState, SimTimeTuple)
 
 class SchoolState(NonEssentialBusinessLocationState):
     contact_rate: ContactRate

@@ -1,5 +1,7 @@
-from ..interfaces import BaseLocation, ContactRate, LocationRule, LocationState, SimTime
 from _typeshed import Incomplete
+
+from ..interfaces import (BaseLocation, ContactRate, LocationRule,
+                          LocationState, SimTime)
 
 class HomeState(LocationState):
     contact_rate: ContactRate

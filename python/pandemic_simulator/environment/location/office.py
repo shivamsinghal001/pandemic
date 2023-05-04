@@ -2,12 +2,8 @@
 
 from dataclasses import dataclass
 
-from ..interfaces import (
-    NonEssentialBusinessLocationState,
-    ContactRate,
-    SimTimeTuple,
-    AgeRestrictedBusinessBaseLocation,
-)
+from ..interfaces import (AgeRestrictedBusinessBaseLocation, ContactRate,
+                          NonEssentialBusinessLocationState, SimTimeTuple)
 
 __all__ = ["Office", "OfficeState"]
 

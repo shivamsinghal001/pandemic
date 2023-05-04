@@ -7,14 +7,9 @@ from typing import List, Optional, Sequence
 import numpy as np
 
 from ...environment import PandemicObservation, PandemicSimOpts
+from .stage_schedule import StageSchedule
 
-__all__ = ["ExperimentResult", "ExperimentDataLoader", "StageSchedule"]
-
-
-@dataclasses.dataclass(frozen=True)
-class StageSchedule:
-    stage: int
-    end_day: Optional[int] = None
+__all__ = ["ExperimentResult", "ExperimentDataLoader"]
 
 
 @dataclasses.dataclass

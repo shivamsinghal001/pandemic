@@ -1,15 +1,8 @@
-from ..interfaces import (
-    ContactTracer,
-    LocationID,
-    NoOP,
-    PersonID,
-    PersonRoutine,
-    PersonState,
-    SimTime,
-    SimTimeTuple,
-)
-from .base import BasePerson
 from typing import Optional, Sequence
+
+from ..interfaces import (ContactTracer, LocationID, NoOP, PersonID,
+                          PersonRoutine, PersonState, SimTime, SimTimeTuple)
+from .base import BasePerson
 
 class Minor(BasePerson):
     def __init__(

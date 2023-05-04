@@ -1,7 +1,9 @@
+from typing import Set
+
+from orderedset import OrderedSet
+
 from .ids import PersonID
 from .sim_time import SimTimeTuple
-from orderedset import OrderedSet
-from typing import Set
 
 class ContactRate:
     min_assignees: int

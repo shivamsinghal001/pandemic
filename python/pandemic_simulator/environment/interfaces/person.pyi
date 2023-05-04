@@ -1,4 +1,7 @@
 import abc
+from abc import ABC, abstractmethod
+from typing import List, Optional, Sequence, Tuple
+
 from .contact_tracer import ContactTracer
 from .ids import LocationID, PersonID
 from .infection_model import IndividualInfectionState, InfectionSummary, Risk
@@ -6,8 +9,6 @@ from .pandemic_testing_result import PandemicTestResult
 from .pandemic_types import NoOP
 from .regulation import PandemicRegulation
 from .sim_time import SimTime
-from abc import ABC, abstractmethod
-from typing import List, Optional, Sequence, Tuple
 
 class PersonState:
     current_location: LocationID

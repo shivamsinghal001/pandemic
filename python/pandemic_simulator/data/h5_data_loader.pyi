@@ -1,6 +1,7 @@
-from .interfaces import ExperimentDataLoader, ExperimentResult
 from pathlib import Path
 from typing import Sequence
+
+from .interfaces import ExperimentDataLoader, ExperimentResult
 
 class H5DataLoader(ExperimentDataLoader):
     def __init__(self, filename: str, path: Path = ...) -> None: ...

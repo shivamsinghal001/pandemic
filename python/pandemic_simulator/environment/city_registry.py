@@ -1,29 +1,16 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 import dataclasses
-from typing import Dict, List, Optional, cast, Set, Type, Mapping, Tuple, Union
+from typing import Dict, List, Mapping, Optional, Set, Tuple, Type, Union, cast
 
 from cachetools import cached
+from pandemic_simulator.environment.interfaces.location_base_business import \
+    BusinessBaseLocation
 
-from .interfaces import (
-    LocationID,
-    Location,
-    PersonID,
-    Person,
-    Registry,
-    RegistrationError,
-    InfectionSummary,
-    IndividualInfectionState,
-    BusinessLocationState,
-    PandemicTestResult,
-    LocationSummary,
-    SimTimeTuple,
-    SimTime,
-    LocationState,
-    get_infection_summary,
-)
-from pandemic_simulator.environment.interfaces.location_base_business import (
-    BusinessBaseLocation,
-)
+from .interfaces import (BusinessLocationState, IndividualInfectionState,
+                         InfectionSummary, Location, LocationID, LocationState,
+                         LocationSummary, PandemicTestResult, Person, PersonID,
+                         RegistrationError, Registry, SimTime, SimTimeTuple,
+                         get_infection_summary)
 from .location.cemetery import Cemetery
 
 __all__ = ["CityRegistry"]

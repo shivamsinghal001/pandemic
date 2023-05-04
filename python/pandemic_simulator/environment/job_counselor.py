@@ -1,10 +1,10 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from dataclasses import dataclass
-from typing import List, Tuple, Optional, Sequence
+from typing import List, Optional, Sequence, Tuple
 
 import numpy as np
 
-from .interfaces import LocationID, globals, SimTimeTuple, BusinessBaseLocation
+from .interfaces import BusinessBaseLocation, LocationID, SimTimeTuple, globals
 from .simulator_config import LocationConfig
 
 __all__ = ["JobCounselor"]

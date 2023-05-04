@@ -1,4 +1,4 @@
-from ..interfaces import PandemicTestResult, PandemicTesting, PersonState
+from ..interfaces import PandemicTesting, PandemicTestResult, PersonState
 
 class RandomPandemicTesting(PandemicTesting):
     def __init__(

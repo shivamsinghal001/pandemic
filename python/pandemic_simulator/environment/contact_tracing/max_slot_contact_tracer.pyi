@@ -1,7 +1,9 @@
-import numpy as np
-from ..interfaces import ContactTracer, PersonID
-from orderedset import OrderedSet
 from typing import Mapping
+
+import numpy as np
+from orderedset import OrderedSet
+
+from ..interfaces import ContactTracer, PersonID
 
 class MaxSlotContactTracer(ContactTracer):
     def __init__(

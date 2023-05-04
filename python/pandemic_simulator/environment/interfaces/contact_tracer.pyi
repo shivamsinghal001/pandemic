@@ -1,9 +1,11 @@
 import abc
-import numpy as np
-from .ids import PersonID
 from abc import ABC, abstractmethod
-from orderedset import OrderedSet
 from typing import Mapping
+
+import numpy as np
+from orderedset import OrderedSet
+
+from .ids import PersonID
 
 class ContactTracer(ABC, metaclass=abc.ABCMeta):
     @abstractmethod

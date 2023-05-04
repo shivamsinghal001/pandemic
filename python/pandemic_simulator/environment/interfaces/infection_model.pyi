@@ -1,8 +1,9 @@
 import abc
-from _typeshed import Incomplete
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Optional
+
+from _typeshed import Incomplete
 
 class InfectionSummary(Enum):
     NONE: str

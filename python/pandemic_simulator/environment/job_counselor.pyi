@@ -1,6 +1,7 @@
+from typing import Optional, Sequence
+
 from .interfaces import LocationID, SimTimeTuple
 from .simulator_config import LocationConfig
-from typing import Optional, Sequence
 
 class WorkPackage:
     work: LocationID

@@ -1,7 +1,9 @@
+from typing import Optional, Sequence
+
 import numpy as np
+
 from .ids import LocationID
 from .sim_state import PandemicSimState
-from typing import Optional, Sequence
 
 class PandemicObservation:
     global_infection_summary: np.ndarray

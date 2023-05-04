@@ -1,12 +1,8 @@
-from ..interfaces import (
-    LocationID,
-    NoOP,
-    PersonRoutine,
-    PersonRoutineWithStatus,
-    RoutineTrigger,
-)
-from .base import BasePerson
 from typing import Optional, Sequence
+
+from ..interfaces import (LocationID, NoOP, PersonRoutine,
+                          PersonRoutineWithStatus, RoutineTrigger)
+from .base import BasePerson
 
 def execute_routines(
     person: BasePerson, routines_with_status: Sequence[PersonRoutineWithStatus]

@@ -3,14 +3,9 @@ from typing import cast
 
 import numpy as np
 
-from ..interfaces import (
-    PersonState,
-    InfectionSummary,
-    IndividualInfectionState,
-    PandemicTestResult,
-    PandemicTesting,
-    globals,
-)
+from ..interfaces import (IndividualInfectionState, InfectionSummary,
+                          PandemicTesting, PandemicTestResult, PersonState,
+                          globals)
 
 __all__ = ["RandomPandemicTesting"]
 

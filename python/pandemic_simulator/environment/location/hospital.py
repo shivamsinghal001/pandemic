@@ -3,14 +3,9 @@
 from dataclasses import dataclass, field
 from typing import Set, cast
 
+from ..interfaces import (BusinessBaseLocation, BusinessLocationState,
+                          InfectionSummary, PersonID, SimTimeTuple)
 from .utils import get_work_time_for_24_7_open_locations
-from ..interfaces import (
-    PersonID,
-    InfectionSummary,
-    BusinessLocationState,
-    SimTimeTuple,
-    BusinessBaseLocation,
-)
 
 __all__ = ["Hospital", "HospitalState"]
 

@@ -1,9 +1,10 @@
+from abc import ABCMeta
+from typing import ClassVar, Tuple, Type
+
 from .ids import PersonID
 from .location_base import BaseLocation
 from .location_rules import LocationRule
 from .sim_time import SimTime, SimTimeTuple
-from abc import ABCMeta
-from typing import ClassVar, Tuple, Type
 
 class BusinessBaseLocation(BaseLocation[_BusinessState], metaclass=ABCMeta):
     location_rule_type: Type

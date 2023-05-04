@@ -1,8 +1,9 @@
 import abc
-from .regulation import PandemicRegulation
-from .sim_state import PandemicSimState
 from abc import ABC, abstractmethod
 from typing import Any
+
+from .regulation import PandemicRegulation
+from .sim_state import PandemicSimState
 
 class SimStateConsumer(ABC, metaclass=abc.ABCMeta):
     @abstractmethod

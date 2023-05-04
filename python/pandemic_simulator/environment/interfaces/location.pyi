@@ -1,9 +1,10 @@
 import abc
+from abc import ABC, abstractmethod
+from typing import ClassVar, Type
+
 from .ids import LocationID, PersonID
 from .location_rules import LocationRule
 from .sim_time import SimTime
-from abc import ABC, abstractmethod
-from typing import ClassVar, Type
 
 class LocationError(Exception): ...
 

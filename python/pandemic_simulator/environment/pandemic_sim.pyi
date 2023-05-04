@@ -1,19 +1,13 @@
-from .interfaces import (
-    ContactTracer,
-    InfectionModel,
-    Location,
-    PandemicRegulation,
-    PandemicSimState,
-    PandemicTesting,
-    Person,
-    PersonRoutineAssignment,
-    Registry,
-    SimTimeInterval,
-)
+from typing import List, Optional, Sequence
+
+from _typeshed import Incomplete
+
+from .interfaces import (ContactTracer, InfectionModel, Location,
+                         PandemicRegulation, PandemicSimState, PandemicTesting,
+                         Person, PersonRoutineAssignment, Registry,
+                         SimTimeInterval)
 from .simulator_config import PandemicSimConfig
 from .simulator_opts import PandemicSimOpts
-from _typeshed import Incomplete
-from typing import List, Optional, Sequence
 
 def make_locations(sim_config: PandemicSimConfig) -> List[Location]: ...
 

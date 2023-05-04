@@ -1,3 +1,7 @@
+from typing import Optional
+
+from structlog import BoundLogger as BoundLogger
+
 from .city_registry import *
 from .contact_tracing import *
 from .done import *
@@ -13,8 +17,6 @@ from .person import *
 from .reward import *
 from .simulator_config import *
 from .simulator_opts import *
-from structlog import BoundLogger as BoundLogger
-from typing import Optional
 
 def init_globals(
     registry: Optional[Registry] = ...,

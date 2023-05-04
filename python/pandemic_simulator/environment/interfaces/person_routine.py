@@ -2,12 +2,12 @@
 import enum
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
-from typing import Optional, Sequence, Union, Type
+from typing import Optional, Sequence, Type, Union
 
 from .ids import LocationID
 from .location import Location
 from .person import Person, PersonState
-from .sim_time import SimTimeInterval, SimTimeTuple, SimTime
+from .sim_time import SimTime, SimTimeInterval, SimTimeTuple
 
 __all__ = [
     "PersonRoutine",

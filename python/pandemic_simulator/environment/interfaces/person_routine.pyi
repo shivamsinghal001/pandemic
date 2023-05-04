@@ -1,10 +1,11 @@
 import enum
+from abc import ABCMeta, abstractmethod
+from typing import Optional, Sequence, Type, Union
+
 from .ids import LocationID
 from .location import Location
 from .person import Person, PersonState
 from .sim_time import SimTime, SimTimeInterval, SimTimeTuple
-from abc import ABCMeta, abstractmethod
-from typing import Optional, Sequence, Type, Union
 
 class SpecialEndLoc(enum.Enum):
     social: int

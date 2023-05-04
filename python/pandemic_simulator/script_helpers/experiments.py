@@ -5,17 +5,11 @@ from typing import List, Optional, Sequence, Union
 import numpy as np
 from tqdm import trange
 
-from .covid_regulations import austin_regulations
 from ..data.interfaces import ExperimentDataSaver, StageSchedule
-from ..environment import (
-    PandemicSimOpts,
-    PandemicSimConfig,
-    NoPandemicDone,
-    PandemicRegulation,
-    init_globals,
-    PandemicGymEnv,
-)
+from ..environment import (NoPandemicDone, PandemicGymEnv, PandemicRegulation,
+                           PandemicSimConfig, PandemicSimOpts, init_globals)
 from ..utils import shallow_asdict
+from .covid_regulations import austin_regulations
 
 __all__ = ["experiment_main", "seeded_experiment_main"]
 

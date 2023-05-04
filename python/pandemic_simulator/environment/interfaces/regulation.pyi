@@ -1,6 +1,7 @@
+from typing import Any, Dict, List, Optional, Type, Union
+
 from .infection_model import Risk
 from .pandemic_types import Default
-from typing import Any, Dict, List, Optional, Type, Union
 
 class PandemicRegulation:
     location_type_to_rule_kwargs: Optional[Dict[Type, Dict[str, Any]]]

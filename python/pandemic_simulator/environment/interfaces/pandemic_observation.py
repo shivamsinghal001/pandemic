@@ -1,6 +1,6 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from dataclasses import dataclass
-from typing import Sequence, Type, cast, Optional, Sequence
+from typing import Optional, Sequence, Type, cast
 
 import numpy as np
 

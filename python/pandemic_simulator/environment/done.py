@@ -2,7 +2,7 @@
 
 import enum
 from abc import ABCMeta, abstractmethod
-from typing import Dict, List, Type, Union, Any
+from typing import Any, Dict, List, Type, Union
 
 import numpy as np
 
@@ -16,7 +16,8 @@ __all__ = [
     "NoPandemicDone",
 ]
 
-from .interfaces import PandemicObservation, InfectionSummary, sorted_infection_summary
+from .interfaces import (InfectionSummary, PandemicObservation,
+                         sorted_infection_summary)
 
 
 class DoneFunction(metaclass=ABCMeta):

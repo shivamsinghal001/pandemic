@@ -1,7 +1,9 @@
-import numpy as np
-from ...environment import PandemicObservation, PandemicSimOpts
 from abc import ABC
 from typing import List, Optional, Sequence
+
+import numpy as np
+
+from ...environment import PandemicObservation, PandemicSimOpts
 
 class StageSchedule:
     stage: int

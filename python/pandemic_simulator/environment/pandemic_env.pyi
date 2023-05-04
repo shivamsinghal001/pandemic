@@ -1,13 +1,15 @@
+from typing import Dict, List, Optional, Sequence, Tuple
+
 import gym
 import numpy as np
+from _typeshed import Incomplete
+
 from .done import DoneFunction
 from .interfaces import LocationID, PandemicObservation, PandemicRegulation
 from .pandemic_sim import PandemicSim
 from .reward import RewardFunction
 from .simulator_config import PandemicSimConfig
 from .simulator_opts import PandemicSimOpts
-from _typeshed import Incomplete
-from typing import Dict, List, Optional, Sequence, Tuple
 
 class PandemicGymEnv(gym.Env):
     observation_space: Incomplete

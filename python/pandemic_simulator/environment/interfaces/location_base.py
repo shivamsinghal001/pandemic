@@ -1,16 +1,16 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from abc import ABCMeta
 from copy import deepcopy
-from typing import Optional, cast, TypeVar, Union
+from typing import Optional, TypeVar, Union, cast
 from uuid import uuid4
 
 import numpy as np
 
 from . import globals
-from .ids import PersonID, LocationID
+from .ids import LocationID, PersonID
 from .location import Location
 from .location_rules import LocationRule
-from .location_states import LocationState, ContactRate
+from .location_states import ContactRate, LocationState
 from .pandemic_types import DEFAULT
 from .registry import Registry
 from .sim_time import SimTime, SimTimeTuple

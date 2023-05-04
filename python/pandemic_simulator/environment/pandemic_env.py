@@ -1,31 +1,25 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
-from typing import List, Optional, Dict, Tuple, Mapping, Type, Sequence
-
-import numpy as np
+import pdb
 from copy import deepcopy
+from typing import Dict, List, Mapping, Optional, Sequence, Tuple, Type
 
 import gym
+import numpy as np
 from gym import spaces
+from ray.rllib.env.multi_agent_env import make_multi_agent
+from ray.tune.registry import register_env
 
-from .done import DoneFunction
-from .interfaces import (
-    LocationID,
-    PandemicObservation,
-    NonEssentialBusinessLocationState,
-    PandemicRegulation,
-    InfectionSummary,
-    sorted_infection_summary,
-)
 from ..data import StageSchedule
+from .done import DoneFunction
+from .interfaces import (InfectionSummary, LocationID,
+                         NonEssentialBusinessLocationState,
+                         PandemicObservation, PandemicRegulation,
+                         sorted_infection_summary)
 from .pandemic_sim import PandemicSim
-from .reward import RewardFunction, SumReward, RewardFunctionFactory, RewardFunctionType
+from .reward import (RewardFunction, RewardFunctionFactory, RewardFunctionType,
+                     SumReward)
 from .simulator_config import PandemicSimConfig
 from .simulator_opts import PandemicSimOpts
-
-import pdb
-from ray.tune.registry import register_env
-from ray.rllib.env.multi_agent_env import make_multi_agent
-
 
 __all__ = ["PandemicGymEnv", "PandemicPolicyGymEnv"]
 

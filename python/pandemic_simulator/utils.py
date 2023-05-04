@@ -1,7 +1,7 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 import abc
 import dataclasses
-from typing import Any, cast, Type, TypeVar, Dict, List
+from typing import Any, Dict, List, Type, TypeVar, cast
 
 import istype
 import numpy as np

@@ -1,26 +1,14 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 import dataclasses
 from copy import deepcopy
-from typing import Optional, List, Sequence, cast
+from typing import List, Optional, Sequence, cast
 
 import numpy as np
 
-from ..interfaces import (
-    Person,
-    PersonID,
-    PersonState,
-    LocationID,
-    Risk,
-    Registry,
-    PandemicRegulation,
-    SimTime,
-    NoOP,
-    NOOP,
-    SimTimeTuple,
-    PandemicTestResult,
-    ContactTracer,
-    globals,
-)
+from ..interfaces import (NOOP, ContactTracer, LocationID, NoOP,
+                          PandemicRegulation, PandemicTestResult, Person,
+                          PersonID, PersonState, Registry, Risk, SimTime,
+                          SimTimeTuple, globals)
 from ..location import Cemetery, Hospital
 
 __all__ = ["BasePerson"]

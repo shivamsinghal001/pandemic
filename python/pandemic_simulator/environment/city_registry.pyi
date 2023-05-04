@@ -1,16 +1,8 @@
-from .interfaces import (
-    InfectionSummary,
-    Location,
-    LocationID,
-    LocationSummary,
-    PandemicTestResult,
-    Person,
-    PersonID,
-    Registry,
-    SimTime,
-    SimTimeTuple,
-)
 from typing import List, Mapping, Optional, Set, Tuple, Type, Union
+
+from .interfaces import (InfectionSummary, Location, LocationID,
+                         LocationSummary, PandemicTestResult, Person, PersonID,
+                         Registry, SimTime, SimTimeTuple)
 
 class CityRegistry(Registry):
     IGNORE_LOCS_SUMMARY: Set[Type]

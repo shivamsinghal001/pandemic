@@ -1,19 +1,9 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 
+from ..environment import (Bar, GroceryStore, HairSalon, Home, Hospital,
+                           LocationConfig, Office, PandemicSimConfig,
+                           Restaurant, RetailStore, School)
 from .person_routines import DefaultPersonRoutineAssignment
-from ..environment import (
-    Home,
-    GroceryStore,
-    Office,
-    School,
-    Hospital,
-    RetailStore,
-    HairSalon,
-    Restaurant,
-    Bar,
-    PandemicSimConfig,
-    LocationConfig,
-)
 
 __all__ = [
     "town_config",

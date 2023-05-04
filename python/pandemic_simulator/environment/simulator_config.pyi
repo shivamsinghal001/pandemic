@@ -1,5 +1,6 @@
-from .interfaces import BaseLocation, PersonRoutineAssignment
 from typing import Any, Dict, Optional, Sequence, Type
+
+from .interfaces import BaseLocation, PersonRoutineAssignment
 
 class LocationConfig:
     location_type: Type[BaseLocation]

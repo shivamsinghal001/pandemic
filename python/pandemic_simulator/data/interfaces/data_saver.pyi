@@ -1,7 +1,9 @@
-import numpy as np
-from ...environment import PandemicObservation
 from abc import ABC
 from typing import Any, Optional, Union
+
+import numpy as np
+
+from ...environment import PandemicObservation
 
 class ExperimentDataSaver(ABC):
     def begin(self, obs: PandemicObservation) -> None: ...

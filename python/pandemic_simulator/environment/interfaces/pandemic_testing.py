@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Dict
 
-from .pandemic_testing_result import PandemicTestResult
 from .infection_model import InfectionSummary
+from .pandemic_testing_result import PandemicTestResult
 from .person import PersonState
 
 __all__ = ["PandemicTesting", "GlobalTestingState"]

@@ -1,7 +1,7 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, Any, Optional, Union, List, Type
+from typing import Any, Dict, List, Optional, Type, Union
 
 from .pandemic_types import Default
 

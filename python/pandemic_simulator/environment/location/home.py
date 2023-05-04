@@ -2,15 +2,8 @@
 
 from dataclasses import dataclass
 
-from ..interfaces import (
-    LocationState,
-    ContactRate,
-    SimTime,
-    SimTimeTuple,
-    LocationRule,
-    globals,
-    BaseLocation,
-)
+from ..interfaces import (BaseLocation, ContactRate, LocationRule,
+                          LocationState, SimTime, SimTimeTuple, globals)
 
 __all__ = ["Home", "HomeState"]
 

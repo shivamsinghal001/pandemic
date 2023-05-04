@@ -7,9 +7,9 @@ from typing import Any, Dict, Optional, Union
 import h5py as h5
 import numpy as np
 
-from .interfaces import ExperimentDataSaver
 from ..environment import PandemicObservation
 from ..utils import shallow_asdict
+from .interfaces import ExperimentDataSaver
 
 __all__ = ["H5DataSaver"]
 

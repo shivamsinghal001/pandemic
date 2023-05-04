@@ -1,14 +1,7 @@
-from ..interfaces import (
-    ContactTracer,
-    LocationID,
-    NoOP,
-    PandemicRegulation,
-    Person,
-    PersonID,
-    PersonState,
-    SimTime,
-)
 from typing import Optional, Sequence
+
+from ..interfaces import (ContactTracer, LocationID, NoOP, PandemicRegulation,
+                          Person, PersonID, PersonState, SimTime)
 
 class BasePerson(Person):
     def __init__(

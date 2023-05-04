@@ -1,9 +1,9 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 import dataclasses
-from typing import Union, Optional, Type
+from typing import Optional, Type, Union
 
 from .location_states import ContactRate
-from .pandemic_types import Default, DEFAULT
+from .pandemic_types import DEFAULT, Default
 from .sim_time import SimTimeTuple
 
 __all__ = ["LocationRule", "BusinessLocationRule", "NonEssentialBusinessLocationRule"]

@@ -1,19 +1,11 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
-from typing import Sequence, Optional, cast, Type, Tuple
+from typing import Optional, Sequence, Tuple, Type, cast
 
+from ..interfaces import (NOOP, LocationID, NoOP, PersonRoutine,
+                          PersonRoutineWithStatus, RoutineTrigger,
+                          SimTimeRoutineTrigger, SimTimeTuple, SpecialEndLoc,
+                          globals)
 from .base import BasePerson
-from ..interfaces import (
-    PersonRoutineWithStatus,
-    NoOP,
-    NOOP,
-    LocationID,
-    SpecialEndLoc,
-    globals,
-    PersonRoutine,
-    SimTimeTuple,
-    SimTimeRoutineTrigger,
-    RoutineTrigger,
-)
 
 __all__ = [
     "execute_routines",

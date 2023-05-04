@@ -4,25 +4,11 @@
 
 from typing import Sequence, Type
 
-from ..environment import (
-    LocationID,
-    PersonRoutine,
-    HairSalon,
-    Restaurant,
-    Bar,
-    GroceryStore,
-    RetailStore,
-    triggered_routine,
-    weekend_routine,
-    social_routine,
-    mid_day_during_week_routine,
-    PersonRoutineAssignment,
-    Person,
-    Retired,
-    Minor,
-    Worker,
-    Location,
-)
+from ..environment import (Bar, GroceryStore, HairSalon, Location, LocationID,
+                           Minor, Person, PersonRoutine,
+                           PersonRoutineAssignment, Restaurant, RetailStore,
+                           Retired, Worker, mid_day_during_week_routine,
+                           social_routine, triggered_routine, weekend_routine)
 
 __all__ = ["DefaultPersonRoutineAssignment"]
 

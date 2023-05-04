@@ -1,17 +1,8 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from typing import List
 
-from ..environment import (
-    PandemicRegulation,
-    DEFAULT,
-    Risk,
-    Office,
-    School,
-    HairSalon,
-    RetailStore,
-    Restaurant,
-    Bar,
-)
+from ..environment import (DEFAULT, Bar, HairSalon, Office, PandemicRegulation,
+                           Restaurant, RetailStore, Risk, School)
 
 __all__ = [
     "weak_regulations",

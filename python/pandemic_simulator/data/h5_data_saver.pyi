@@ -1,8 +1,10 @@
-import numpy as np
-from ..environment import PandemicObservation
-from .interfaces import ExperimentDataSaver
 from pathlib import Path
 from typing import Any, Optional, Union
+
+import numpy as np
+
+from ..environment import PandemicObservation
+from .interfaces import ExperimentDataSaver
 
 class H5DataSaver(ExperimentDataSaver):
     def __init__(

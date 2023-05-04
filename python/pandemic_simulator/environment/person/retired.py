@@ -1,20 +1,12 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 
-from typing import Optional, Sequence, List
+from typing import List, Optional, Sequence
 
+from ..interfaces import (NOOP, ContactTracer, LocationID, NoOP, PersonID,
+                          PersonRoutine, PersonRoutineWithStatus, PersonState,
+                          SimTime)
 from .base import BasePerson
 from .routine_utils import execute_routines
-from ..interfaces import (
-    LocationID,
-    SimTime,
-    NoOP,
-    NOOP,
-    PersonState,
-    PersonRoutine,
-    ContactTracer,
-    PersonID,
-    PersonRoutineWithStatus,
-)
 
 __all__ = ["Retired"]
 

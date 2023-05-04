@@ -1,7 +1,7 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 import dataclasses
 from dataclasses import dataclass, field
-from typing import Sequence, Type, Any, Dict, Optional
+from typing import Any, Dict, Optional, Sequence, Type
 
 from .interfaces import BaseLocation, PersonRoutineAssignment
 from .location import Hospital, HospitalState
