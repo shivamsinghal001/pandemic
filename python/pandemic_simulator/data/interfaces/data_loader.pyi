@@ -4,11 +4,7 @@ from typing import List, Optional, Sequence
 import numpy as np
 
 from ...environment import PandemicObservation, PandemicSimOpts
-
-class StageSchedule:
-    stage: int
-    end_day: Optional[int]
-    def __init__(self, stage, end_day) -> None: ...
+from ...environment.interfaces.stage_schedule import StageSchedule
 
 class ExperimentResult:
     sim_opts: PandemicSimOpts

@@ -10,7 +10,8 @@ import numpy as np
 from pandemic_simulator.environment import PandemicObservation
 
 from ..environment import PandemicSimOpts
-from .interfaces import ExperimentDataLoader, ExperimentResult, StageSchedule
+from .interfaces import ExperimentDataLoader, ExperimentResult
+from ..environment.interfaces.stage_schedule import StageSchedule
 
 __all__ = ["H5DataLoader"]
 

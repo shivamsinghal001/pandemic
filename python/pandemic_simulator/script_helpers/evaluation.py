@@ -4,7 +4,8 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Union
 
-from ..data import H5DataSaver, StageSchedule
+from ..data import H5DataSaver
+from ..environment.interfaces.stage_schedule import StageSchedule
 from ..environment import (PandemicRegulation, PandemicSimConfig,
                            PandemicSimOpts, Risk)
 from .experiments import experiment_main

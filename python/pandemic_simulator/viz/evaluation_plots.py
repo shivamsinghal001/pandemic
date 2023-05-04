@@ -7,7 +7,8 @@ from matplotlib import pyplot as plt
 from matplotlib.axes import Axes
 from mpl_toolkits.mplot3d import Axes3D
 
-from ..data import ExperimentResult, StageSchedule
+from ..data import ExperimentResult
+from ..environment.interfaces.stage_schedule import StageSchedule
 from ..environment import InfectionSummary, sorted_infection_summary
 
 __all__ = [

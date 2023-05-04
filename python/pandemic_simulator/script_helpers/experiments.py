@@ -5,7 +5,8 @@ from typing import List, Optional, Sequence, Union
 import numpy as np
 from tqdm import trange
 
-from ..data.interfaces import ExperimentDataSaver, StageSchedule
+from ..data.interfaces import ExperimentDataSaver
+from ..environment.interfaces.stage_schedule import StageSchedule
 from ..environment import (NoPandemicDone, PandemicGymEnv, PandemicRegulation,
                            PandemicSimConfig, PandemicSimOpts, init_globals)
 from ..utils import shallow_asdict
