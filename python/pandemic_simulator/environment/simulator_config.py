@@ -6,7 +6,7 @@ from typing import Sequence, Type, Any, Dict, Optional
 from .interfaces import BaseLocation, PersonRoutineAssignment
 from .location import Hospital, HospitalState
 
-__all__ = ['LocationConfig', 'PandemicSimConfig']
+__all__ = ["LocationConfig", "PandemicSimConfig"]
 
 
 @dataclass
@@ -28,7 +28,9 @@ class LocationConfig:
 
     def __post_init__(self) -> None:
         for k in self.state_opts:
-            assert k in [f.name for f in dataclasses.fields(self.location_type.state_type)]
+            assert k in [
+                f.name for f in dataclasses.fields(self.location_type.state_type)
+            ]
 
 
 @dataclass
@@ -57,5 +59,7 @@ class PandemicSimConfig:
     def __post_init__(self) -> None:
         for config in self.location_configs:
             if issubclass(config.location_type, Hospital):
-                patient_capacity = config.state_opts.get('patient_capacity', HospitalState.patient_capacity)
+                patient_capacity = config.state_opts.get(
+                    "patient_capacity", HospitalState.patient_capacity
+                )
                 self.max_hospital_capacity = config.num * patient_capacity

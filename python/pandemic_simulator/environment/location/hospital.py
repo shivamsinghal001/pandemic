@@ -4,9 +4,15 @@ from dataclasses import dataclass, field
 from typing import Set, cast
 
 from .utils import get_work_time_for_24_7_open_locations
-from ..interfaces import PersonID, InfectionSummary, BusinessLocationState, SimTimeTuple, BusinessBaseLocation
+from ..interfaces import (
+    PersonID,
+    InfectionSummary,
+    BusinessLocationState,
+    SimTimeTuple,
+    BusinessBaseLocation,
+)
 
-__all__ = ['Hospital', 'HospitalState']
+__all__ = ["Hospital", "HospitalState"]
 
 
 @dataclass
@@ -31,7 +37,7 @@ class HospitalState(BusinessLocationState):
 
 
 class Hospital(BusinessBaseLocation[HospitalState]):
-    """Class that implements a basic hospital location. """
+    """Class that implements a basic hospital location."""
 
     state_type = HospitalState
 
@@ -39,10 +45,14 @@ class Hospital(BusinessBaseLocation[HospitalState]):
         inf_sum = self._registry.get_person_infection_summary(person_id)
         state = cast(HospitalState, self._state)
 
-        allow_patient = (inf_sum == InfectionSummary.CRITICAL and
-                         (state.patient_capacity == -1 or len(state.patients_in_location) < state.patient_capacity))
+        allow_patient = inf_sum == InfectionSummary.CRITICAL and (
+            state.patient_capacity == -1
+            or len(state.patients_in_location) < state.patient_capacity
+        )
 
-        return allow_patient or (inf_sum != InfectionSummary.CRITICAL and super().is_entry_allowed(person_id))
+        return allow_patient or (
+            inf_sum != InfectionSummary.CRITICAL and super().is_entry_allowed(person_id)
+        )
 
     def add_person_to_location(self, person_id: PersonID) -> None:
         inf_sum = self._registry.get_person_infection_summary(person_id)

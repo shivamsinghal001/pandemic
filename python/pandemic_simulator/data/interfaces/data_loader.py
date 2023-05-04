@@ -8,7 +8,7 @@ import numpy as np
 
 from ...environment import PandemicObservation, PandemicSimOpts
 
-__all__ = ['ExperimentResult', 'ExperimentDataLoader', 'StageSchedule']
+__all__ = ["ExperimentResult", "ExperimentDataLoader", "StageSchedule"]
 
 
 @dataclasses.dataclass(frozen=True)

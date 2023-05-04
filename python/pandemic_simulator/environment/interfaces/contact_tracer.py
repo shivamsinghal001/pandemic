@@ -8,7 +8,7 @@ from orderedset import OrderedSet
 
 from .ids import PersonID
 
-__all__ = ['ContactTracer']
+__all__ = ["ContactTracer"]
 
 
 class ContactTracer(ABC):

@@ -7,7 +7,7 @@ from .pandemic_testing_result import PandemicTestResult
 from .infection_model import InfectionSummary
 from .person import PersonState
 
-__all__ = ['PandemicTesting', 'GlobalTestingState']
+__all__ = ["PandemicTesting", "GlobalTestingState"]
 
 
 @dataclass

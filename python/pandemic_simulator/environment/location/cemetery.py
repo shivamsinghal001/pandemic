@@ -3,9 +3,17 @@
 from dataclasses import dataclass
 from typing import cast
 
-from ..interfaces import LocationRule, LocationState, PersonID, ContactRate, DEFAULT, SimTimeTuple, BaseLocation
+from ..interfaces import (
+    LocationRule,
+    LocationState,
+    PersonID,
+    ContactRate,
+    DEFAULT,
+    SimTimeTuple,
+    BaseLocation,
+)
 
-__all__ = ['Cemetery', 'CemeteryRule', 'CemeteryState']
+__all__ = ["Cemetery", "CemeteryRule", "CemeteryState"]
 
 
 @dataclass(frozen=True)
@@ -24,7 +32,7 @@ class CemeteryState(LocationState):
 
 
 class Cemetery(BaseLocation[CemeteryState]):
-    """Class that implements a cemetery location. """
+    """Class that implements a cemetery location."""
 
     location_rule_type = CemeteryRule
     state_type = CemeteryState
@@ -33,20 +41,29 @@ class Cemetery(BaseLocation[CemeteryState]):
         rule = cast(CemeteryRule, new_rule)
         cr = rule.contact_rate
         if cr is not None:
-            self._state.contact_rate = (self._init_state.contact_rate if cr == DEFAULT
-                                        else cast(ContactRate, cr))
+            self._state.contact_rate = (
+                self._init_state.contact_rate
+                if cr == DEFAULT
+                else cast(ContactRate, cr)
+            )
 
         if rule.visitor_time is not None:
-            self._state.visitor_time = (self._init_state.visitor_time if rule.visitor_time == DEFAULT
-                                        else cast(SimTimeTuple, rule.visitor_time))
+            self._state.visitor_time = (
+                self._init_state.visitor_time
+                if rule.visitor_time == DEFAULT
+                else cast(SimTimeTuple, rule.visitor_time)
+            )
         if rule.visitor_capacity is not None:
-            self._state.visitor_capacity = (self._init_state.visitor_capacity if rule.visitor_capacity == DEFAULT
-                                            else rule.visitor_capacity)
+            self._state.visitor_capacity = (
+                self._init_state.visitor_capacity
+                if rule.visitor_capacity == DEFAULT
+                else rule.visitor_capacity
+            )
 
     def remove_person_from_location(self, person_id: PersonID) -> None:
         if person_id in self._state.assignees_in_location:
-            raise ValueError(f'Person {person_id} is already cremated. Cannot remove!')
+            raise ValueError(f"Person {person_id} is already cremated. Cannot remove!")
         elif person_id in self._state.visitors_in_location:
             self._state.visitors_in_location.remove(person_id)
         else:
-            raise ValueError(f'Person {person_id} not in location {self.id}')
+            raise ValueError(f"Person {person_id} not in location {self.id}")

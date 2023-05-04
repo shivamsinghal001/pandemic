@@ -1,10 +1,18 @@
-from ..interfaces import AgeRestrictedBusinessBaseLocation, ContactRate, NonEssentialBusinessBaseLocation, NonEssentialBusinessLocationState, SimTimeTuple
+from ..interfaces import (
+    AgeRestrictedBusinessBaseLocation,
+    ContactRate,
+    NonEssentialBusinessBaseLocation,
+    NonEssentialBusinessLocationState,
+    SimTimeTuple,
+)
 from _typeshed import Incomplete
 
 class RestaurantState(NonEssentialBusinessLocationState):
     contact_rate: ContactRate
     open_time: SimTimeTuple
-    def __init__(self, contact_rate, visitor_capacity, visitor_time, open_time, locked) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_capacity, visitor_time, open_time, locked
+    ) -> None: ...
 
 class Restaurant(NonEssentialBusinessBaseLocation[RestaurantState]):
     state_type: Incomplete
@@ -12,7 +20,9 @@ class Restaurant(NonEssentialBusinessBaseLocation[RestaurantState]):
 class BarState(NonEssentialBusinessLocationState):
     contact_rate: ContactRate
     open_time: SimTimeTuple
-    def __init__(self, contact_rate, visitor_capacity, visitor_time, open_time, locked) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_capacity, visitor_time, open_time, locked
+    ) -> None: ...
 
 class Bar(AgeRestrictedBusinessBaseLocation[BarState]):
     state_type: Incomplete

@@ -5,18 +5,19 @@ from typing import Any
 from .regulation import PandemicRegulation
 from .sim_state import PandemicSimState
 
-__all__ = ['SimStateConsumer']
+__all__ = ["SimStateConsumer"]
 
 
 class SimStateConsumer(ABC):
-
     @abstractmethod
     def consume_begin(self, sim_state: PandemicSimState) -> None:
         """Begin the consumer. For example, the start of each episode"""
         pass
 
     @abstractmethod
-    def consume_state(self, sim_state: PandemicSimState, regulation: PandemicRegulation) -> None:
+    def consume_state(
+        self, sim_state: PandemicSimState, regulation: PandemicRegulation
+    ) -> None:
         pass
 
     @abstractmethod

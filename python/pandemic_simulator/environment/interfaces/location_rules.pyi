@@ -13,8 +13,12 @@ class LocationRule:
 
 class BusinessLocationRule(LocationRule):
     open_time: Union[SimTimeTuple, Default, None]
-    def __init__(self, contact_rate, visitor_time, visitor_capacity, open_time) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_time, visitor_capacity, open_time
+    ) -> None: ...
 
 class NonEssentialBusinessLocationRule(BusinessLocationRule):
     lock: Optional[bool]
-    def __init__(self, contact_rate, visitor_time, visitor_capacity, open_time, lock) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_time, visitor_capacity, open_time, lock
+    ) -> None: ...

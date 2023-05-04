@@ -9,11 +9,12 @@ from .location_states import LocationState
 from .sim_time import SimTime
 from ...utils import abstract_class_property
 
-__all__ = ['Location', 'LocationError', 'LocationSummary']
+__all__ = ["Location", "LocationError", "LocationSummary"]
 
 
 class LocationError(Exception):
     """Generic location error"""
+
     pass
 
 
@@ -28,13 +29,15 @@ class LocationSummary:
     """Entries to the location by a visitor"""
 
 
-_State = TypeVar('_State', bound=LocationState)
+_State = TypeVar("_State", bound=LocationState)
 
 
 class Location(ABC, Generic[_State]):
     """Class that implements a location with a pre-defined operating rules"""
 
-    location_rule_type: Type = abstract_class_property()  # The type of the location rule used by the location
+    location_rule_type: Type = (
+        abstract_class_property()
+    )  # The type of the location rule used by the location
     state_type: ClassVar[Type[_State]]
 
     @property

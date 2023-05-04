@@ -11,7 +11,15 @@ class ContactRate:
     fraction_assignees_visitors: float
     fraction_visitors: float
     def __post_init__(self) -> None: ...
-    def __init__(self, min_assignees, min_assignees_visitors, min_visitors, fraction_assignees, fraction_assignees_visitors, fraction_visitors) -> None: ...
+    def __init__(
+        self,
+        min_assignees,
+        min_assignees_visitors,
+        min_visitors,
+        fraction_assignees,
+        fraction_assignees_visitors,
+        fraction_visitors,
+    ) -> None: ...
 
 class LocationState:
     contact_rate: ContactRate
@@ -30,8 +38,12 @@ class LocationState:
 
 class BusinessLocationState(LocationState):
     open_time: SimTimeTuple
-    def __init__(self, contact_rate, visitor_capacity, visitor_time, open_time) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_capacity, visitor_time, open_time
+    ) -> None: ...
 
 class NonEssentialBusinessLocationState(BusinessLocationState):
     locked: bool
-    def __init__(self, contact_rate, visitor_capacity, visitor_time, open_time, locked) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_capacity, visitor_time, open_time, locked
+    ) -> None: ...

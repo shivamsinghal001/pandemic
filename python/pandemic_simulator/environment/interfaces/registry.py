@@ -10,7 +10,7 @@ from .pandemic_testing_result import PandemicTestResult
 from .person import Person
 from .sim_time import SimTimeTuple, SimTime
 
-__all__ = ['Registry', 'RegistrationError']
+__all__ = ["Registry", "RegistrationError"]
 
 
 class RegistrationError(Exception):
@@ -38,7 +38,9 @@ class Registry(ABC):
         """
 
     @abstractmethod
-    def register_person_entry_in_location(self, person_id: PersonID, location_id: LocationID) -> bool:
+    def register_person_entry_in_location(
+        self, person_id: PersonID, location_id: LocationID
+    ) -> bool:
         """
         Register a person's entry in the specified location
 
@@ -78,7 +80,7 @@ class Registry(ABC):
     @abstractmethod
     def global_location_summary(self) -> Mapping[Tuple[str, str], LocationSummary]:
         """Return a mapping between (a location type name, person type name) and the location summary
-           E.g.: {('School', 'Minor'): LocationSummary(entry_count=10)}
+        E.g.: {('School', 'Minor'): LocationSummary(entry_count=10)}
         """
 
     @property
@@ -89,7 +91,9 @@ class Registry(ABC):
     # ----------------location utility methods-----------------
 
     @abstractmethod
-    def location_ids_of_type(self, location_type: Union[type, Tuple[type, ...]]) -> Tuple[LocationID, ...]:
+    def location_ids_of_type(
+        self, location_type: Union[type, Tuple[type, ...]]
+    ) -> Tuple[LocationID, ...]:
         """Return a tuple of location ids for the given type of location."""
 
     @abstractmethod
@@ -105,7 +109,9 @@ class Registry(ABC):
         """Return the open time for the given location and None if not applicable"""
 
     @abstractmethod
-    def is_location_open_for_visitors(self, location_id: LocationID, sim_time: SimTime) -> bool:
+    def is_location_open_for_visitors(
+        self, location_id: LocationID, sim_time: SimTime
+    ) -> bool:
         """Return a boolean if the location is open for visitors at the given sim_time."""
 
     # ----------------person utility methods-----------------
@@ -118,7 +124,9 @@ class Registry(ABC):
         """Return person's households"""
 
     @abstractmethod
-    def get_person_infection_summary(self, person_id: PersonID) -> Optional[InfectionSummary]:
+    def get_person_infection_summary(
+        self, person_id: PersonID
+    ) -> Optional[InfectionSummary]:
         """Return person's infection summary"""
 
     @abstractmethod

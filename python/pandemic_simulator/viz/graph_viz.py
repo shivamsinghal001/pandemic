@@ -8,7 +8,7 @@ from .pandemic_viz import PandemicViz
 from ..environment import PandemicObservation, PandemicSimState, PandemicSim
 from ..utils import checked_cast
 
-__all__ = ['GraphViz']
+__all__ = ["GraphViz"]
 
 
 class GraphViz(PandemicViz):
@@ -25,7 +25,9 @@ class GraphViz(PandemicViz):
     _num_components_per_interval: List[int]
     _max_components: int
 
-    def __init__(self, sim: PandemicSim, num_stages: int = 5, days_per_interval: int = 7):
+    def __init__(
+        self, sim: PandemicSim, num_stages: int = 5, days_per_interval: int = 7
+    ):
         self._sim = sim
         self._num_stages = num_stages
         self._stages_per_interval = []
@@ -48,11 +50,15 @@ class GraphViz(PandemicViz):
         elif isinstance(data, PandemicObservation):
             obs = data
         else:
-            raise ValueError('Unsupported data type')
+            raise ValueError("Unsupported data type")
 
         stage: int = obs.stage[0, 0, 0]
 
-        if not self._graph or self._last_stage != stage or self._day_in_this_interval >= self._days_per_interval:
+        if (
+            not self._graph
+            or self._last_stage != stage
+            or self._day_in_this_interval >= self._days_per_interval
+        ):
             self._graph = networkx.Graph(directed=False)
             self._day_in_this_interval = 0
             self._last_stage = stage
@@ -88,14 +94,14 @@ class GraphViz(PandemicViz):
         plt.subplot(nrows, ncols, 1)
         plt.plot(self._num_components_per_interval)
         plt.ylim([-0.1, self._max_components + 1])
-        plt.title('Connected Components')
-        plt.xlabel('time (intervals)')
+        plt.title("Connected Components")
+        plt.xlabel("time (intervals)")
 
         plt.subplot(nrows, ncols, 2)
         plt.plot(self._stages_per_interval)
         plt.ylim([-0.1, self._num_stages + 1])
-        plt.title('Stage')
-        plt.xlabel('time (intervals)')
+        plt.title("Stage")
+        plt.xlabel("time (intervals)")
 
         plt.tight_layout()
 

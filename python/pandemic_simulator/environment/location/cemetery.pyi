@@ -1,4 +1,10 @@
-from ..interfaces import BaseLocation, ContactRate, LocationRule, LocationState, PersonID
+from ..interfaces import (
+    BaseLocation,
+    ContactRate,
+    LocationRule,
+    LocationState,
+    PersonID,
+)
 from _typeshed import Incomplete
 
 class CemeteryRule(LocationRule):

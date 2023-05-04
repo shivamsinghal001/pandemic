@@ -4,16 +4,26 @@ from typing import cast, Tuple, Type, TypeVar, ClassVar
 
 from .ids import PersonID
 from .location_base import BaseLocation
-from .location_rules import LocationRule, BusinessLocationRule, NonEssentialBusinessLocationRule
+from .location_rules import (
+    LocationRule,
+    BusinessLocationRule,
+    NonEssentialBusinessLocationRule,
+)
 from .location_states import BusinessLocationState, NonEssentialBusinessLocationState
 from .pandemic_types import DEFAULT
 from .sim_time import SimTime, SimTimeTuple
 
-__all__ = ['BusinessBaseLocation', 'EssentialBusinessBaseLocation', 'NonEssentialBusinessBaseLocation',
-           'AgeRestrictedBusinessBaseLocation']
+__all__ = [
+    "BusinessBaseLocation",
+    "EssentialBusinessBaseLocation",
+    "NonEssentialBusinessBaseLocation",
+    "AgeRestrictedBusinessBaseLocation",
+]
 
-_BusinessState = TypeVar('_BusinessState', bound=BusinessLocationState)
-_NonEssentialBusinessState = TypeVar('_NonEssentialBusinessState', bound=NonEssentialBusinessLocationState)
+_BusinessState = TypeVar("_BusinessState", bound=BusinessLocationState)
+_NonEssentialBusinessState = TypeVar(
+    "_NonEssentialBusinessState", bound=NonEssentialBusinessLocationState
+)
 
 
 class BusinessBaseLocation(BaseLocation[_BusinessState], metaclass=ABCMeta):
@@ -30,8 +40,11 @@ class BusinessBaseLocation(BaseLocation[_BusinessState], metaclass=ABCMeta):
         rule = cast(BusinessLocationRule, new_rule)
 
         if rule.open_time is not None:
-            self._state.open_time = (self._init_state.open_time if rule.open_time == DEFAULT
-                                     else cast(SimTimeTuple, rule.open_time))
+            self._state.open_time = (
+                self._init_state.open_time
+                if rule.open_time == DEFAULT
+                else cast(SimTimeTuple, rule.open_time)
+            )
 
     def get_worker_work_time(self) -> SimTimeTuple:
         """Returns work-time for a new worker to work at the location. For example, a location that is open 24x7
@@ -41,19 +54,26 @@ class BusinessBaseLocation(BaseLocation[_BusinessState], metaclass=ABCMeta):
         return self.state.open_time
 
 
-class EssentialBusinessBaseLocation(BusinessBaseLocation[_BusinessState], metaclass=ABCMeta):
+class EssentialBusinessBaseLocation(
+    BusinessBaseLocation[_BusinessState], metaclass=ABCMeta
+):
     """Class that implements an essential business location that has finite open hours."""
+
     pass
 
 
-class NonEssentialBusinessBaseLocation(BusinessBaseLocation[_NonEssentialBusinessState], metaclass=ABCMeta):
+class NonEssentialBusinessBaseLocation(
+    BusinessBaseLocation[_NonEssentialBusinessState], metaclass=ABCMeta
+):
     """Class that implements a non essential base business location that has finite open hours."""
 
     location_rule_type: Type = NonEssentialBusinessLocationRule
 
     def sync(self, sim_time: SimTime) -> None:
         super().sync(sim_time)
-        self._state.is_open = False if self._state.locked else sim_time in self._state.open_time
+        self._state.is_open = (
+            False if self._state.locked else sim_time in self._state.open_time
+        )
 
     def update_rules(self, new_rule: LocationRule) -> None:
         super().update_rules(new_rule)
@@ -63,8 +83,9 @@ class NonEssentialBusinessBaseLocation(BusinessBaseLocation[_NonEssentialBusines
             self._state.locked = rule.lock
 
 
-class AgeRestrictedBusinessBaseLocation(NonEssentialBusinessBaseLocation[_NonEssentialBusinessState],
-                                        metaclass=ABCMeta):
+class AgeRestrictedBusinessBaseLocation(
+    NonEssentialBusinessBaseLocation[_NonEssentialBusinessState], metaclass=ABCMeta
+):
     """Class that implements a base age-restricted business location."""
 
     age_limits: ClassVar[Tuple[int, int]]

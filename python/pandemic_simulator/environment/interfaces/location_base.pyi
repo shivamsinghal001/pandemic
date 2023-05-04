@@ -8,7 +8,11 @@ from typing import Optional, Union
 
 class BaseLocation(Location[_State], metaclass=ABCMeta):
     location_rule_type: Incomplete
-    def __init__(self, loc_id: Union[str, LocationID, None] = ..., init_state: Optional[_State] = ...) -> None: ...
+    def __init__(
+        self,
+        loc_id: Union[str, LocationID, None] = ...,
+        init_state: Optional[_State] = ...,
+    ) -> None: ...
     @property
     def id(self) -> LocationID: ...
     @property

@@ -5,7 +5,7 @@ from typing import Dict, Any, Optional, Union, List, Type
 
 from .pandemic_types import Default
 
-__all__ = ['PandemicRegulation']
+__all__ = ["PandemicRegulation"]
 
 from .infection_model import Risk
 
@@ -44,7 +44,9 @@ class PandemicRegulation:
     wear_facial_coverings: bool = False
     """A bool to tell all persons wear facial coverings."""
 
-    risk_to_avoid_gathering_size: Dict[Risk, int] = field(default_factory=lambda: defaultdict(lambda: -1))
+    risk_to_avoid_gathering_size: Dict[Risk, int] = field(
+        default_factory=lambda: defaultdict(lambda: -1)
+    )
     """A mapping of the peron's risk with the gathering size (or more) that they should avoid. -1 means no limit"""
 
     risk_to_avoid_location_types: Optional[Dict[Risk, List[type]]] = None

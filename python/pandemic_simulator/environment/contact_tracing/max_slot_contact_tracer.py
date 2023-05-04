@@ -7,7 +7,7 @@ import numpy as np
 
 from ..interfaces import ContactTracer, PersonID
 
-__all__ = ['MaxSlotContactTracer']
+__all__ = ["MaxSlotContactTracer"]
 
 
 class MaxSlotContactTracer(ContactTracer):
@@ -88,6 +88,8 @@ class MaxSlotContactTracer(ContactTracer):
                 pid = [val for val in idx if val != person_id]
                 if pid[0] not in res:
                     res[pid[0]] = np.zeros(self._storage_slots)
-                res[pid[0]][slot_num] += self._memory[slot_num][idx]/float(self._time_slot_scale)
+                res[pid[0]][slot_num] += self._memory[slot_num][idx] / float(
+                    self._time_slot_scale
+                )
 
         return res

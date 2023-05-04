@@ -9,8 +9,14 @@ from .location import Location
 from .person import Person, PersonState
 from .sim_time import SimTimeInterval, SimTimeTuple, SimTime
 
-__all__ = ['PersonRoutine', 'SpecialEndLoc', 'PersonRoutineWithStatus', 'PersonRoutineAssignment',
-           'RoutineTrigger', 'SimTimeRoutineTrigger']
+__all__ = [
+    "PersonRoutine",
+    "SpecialEndLoc",
+    "PersonRoutineWithStatus",
+    "PersonRoutineAssignment",
+    "RoutineTrigger",
+    "SimTimeRoutineTrigger",
+]
 
 
 class SpecialEndLoc(enum.Enum):
@@ -18,21 +24,23 @@ class SpecialEndLoc(enum.Enum):
 
 
 class RoutineTrigger(metaclass=ABCMeta):
-
     @abstractmethod
-    def trigger(self, sim_time: SimTime, person_state: Optional[PersonState] = None) -> bool:
+    def trigger(
+        self, sim_time: SimTime, person_state: Optional[PersonState] = None
+    ) -> bool:
         pass
 
 
 class SimTimeRoutineTrigger(RoutineTrigger, SimTimeInterval):
-
-    def trigger(self, sim_time: SimTime, person_state: Optional[PersonState] = None) -> bool:
+    def trigger(
+        self, sim_time: SimTime, person_state: Optional[PersonState] = None
+    ) -> bool:
         return self.trigger_at_interval(sim_time)
 
 
 @dataclass(frozen=True)
 class PersonRoutine:
-    """A dataclass that defines a person's routine every step (hour). """
+    """A dataclass that defines a person's routine every step (hour)."""
 
     start_loc: Optional[LocationID]
     """Start location of the routine. If None, the routine can be started at any location."""
@@ -77,17 +85,23 @@ class PersonRoutineWithStatus:
     end_loc_selected: Optional[LocationID] = None
     """The final end_loc selected after sampling from routine.explorable_end_locs"""
 
-    def _is_routine_due(self, sim_time: SimTime, person_state: Optional[PersonState]) -> bool:
+    def _is_routine_due(
+        self, sim_time: SimTime, person_state: Optional[PersonState]
+    ) -> bool:
         if self.started or self.done or sim_time not in self.routine.valid_time:
             # not due if the routine has already started or is completed or is not valid
             return False
 
         return self.due or self.routine.start_trigger.trigger(sim_time, person_state)
 
-    def sync(self, sim_time: SimTime, person_state: Optional[PersonState] = None) -> None:
+    def sync(
+        self, sim_time: SimTime, person_state: Optional[PersonState] = None
+    ) -> None:
         """Sync the status variables with time."""
         # if completed check if you need to reset the routine for a repetition
-        if self.done and self.routine.reset_when_done_trigger.trigger(sim_time, person_state):
+        if self.done and self.routine.reset_when_done_trigger.trigger(
+            sim_time, person_state
+        ):
             self.reset()
 
         self.due = self._is_routine_due(sim_time, person_state)

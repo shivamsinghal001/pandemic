@@ -29,13 +29,23 @@ class PersonState:
     not_infection_probability_delta: float
     not_infection_probability_history: List[Tuple[LocationID, float]]
     not_infection_probability_delta_history: List[Tuple[LocationID, float]]
-    def __init__(self, current_location, risk, infection_state, infection_spread_multiplier, infection_state_delta, infection_spread_multiplier_delta) -> None: ...
+    def __init__(
+        self,
+        current_location,
+        risk,
+        infection_state,
+        infection_spread_multiplier,
+        infection_state_delta,
+        infection_spread_multiplier_delta,
+    ) -> None: ...
 
 def get_infection_summary(person_state: PersonState) -> InfectionSummary: ...
 
 class Person(ABC, metaclass=abc.ABCMeta):
     @abstractmethod
-    def step(self, sim_time: SimTime, contact_tracer: Optional[ContactTracer] = ...) -> Optional[NoOP]: ...
+    def step(
+        self, sim_time: SimTime, contact_tracer: Optional[ContactTracer] = ...
+    ) -> Optional[NoOP]: ...
     @abstractmethod
     def receive_regulation(self, regulation: PandemicRegulation) -> None: ...
     @abstractmethod

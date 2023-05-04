@@ -1,4 +1,9 @@
-from ..interfaces import BusinessBaseLocation, BusinessLocationState, PersonID, SimTimeTuple
+from ..interfaces import (
+    BusinessBaseLocation,
+    BusinessLocationState,
+    PersonID,
+    SimTimeTuple,
+)
 from _typeshed import Incomplete
 from typing import Set
 
@@ -9,7 +14,9 @@ class HospitalState(BusinessLocationState):
     open_time: SimTimeTuple
     @property
     def persons_in_location(self) -> Set[PersonID]: ...
-    def __init__(self, contact_rate, visitor_capacity, visitor_time, patient_capacity) -> None: ...
+    def __init__(
+        self, contact_rate, visitor_capacity, visitor_time, patient_capacity
+    ) -> None: ...
 
 class Hospital(BusinessBaseLocation[HospitalState]):
     state_type: Incomplete

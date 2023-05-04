@@ -1,7 +1,7 @@
 # Confidential, Copyright 2020, Sony Corporation of America, All rights reserved.
 from dataclasses import dataclass
 
-__all__ = ['PandemicSimOpts']
+__all__ = ["PandemicSimOpts"]
 
 
 @dataclass(frozen=True)
@@ -26,10 +26,12 @@ class PandemicSimOpts:
     symp_testing_rate: float = 0.3
     """Probability of symptomatic people getting tested"""
 
-    critical_testing_rate: float = 1.
+    critical_testing_rate: float = 1.0
     """Probability of people in critical condition getting tested"""
 
-    testing_false_positive_rate: float = 0.001  # false positives are much more rare than negatives
+    testing_false_positive_rate: float = (
+        0.001  # false positives are much more rare than negatives
+    )
     """False positive rate"""
 
     testing_false_negative_rate: float = 0.01

@@ -9,8 +9,12 @@ from orderedset import OrderedSet
 from .ids import PersonID
 from .sim_time import SimTimeTuple
 
-__all__ = ['LocationState', 'ContactRate', 'NonEssentialBusinessLocationState',
-           'BusinessLocationState']
+__all__ = [
+    "LocationState",
+    "ContactRate",
+    "NonEssentialBusinessLocationState",
+    "BusinessLocationState",
+]
 
 
 @dataclass(frozen=True)
@@ -45,7 +49,7 @@ class ContactRate:
 class LocationState:
     """State of the location."""
 
-    contact_rate: ContactRate = ContactRate(1, 1, 0, 0.5, 0., 0.)
+    contact_rate: ContactRate = ContactRate(1, 1, 0, 0.5, 0.0, 0.0)
     """Rate at which assignees interact with other persons at that location."""
 
     visitor_capacity: int = -1
@@ -90,7 +94,9 @@ class LocationState:
 
 @dataclass
 class BusinessLocationState(LocationState):
-    open_time: SimTimeTuple = SimTimeTuple(hours=tuple(range(9, 18)), week_days=tuple(range(0, 5)))
+    open_time: SimTimeTuple = SimTimeTuple(
+        hours=tuple(range(9, 18)), week_days=tuple(range(0, 5))
+    )
     """Specifies the time during which the location is open, during which the state variable is_open is True."""
 
 

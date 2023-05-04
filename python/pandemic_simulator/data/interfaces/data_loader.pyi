@@ -15,7 +15,15 @@ class ExperimentResult:
     reward_trajectories: np.ndarray
     strategy: Sequence[StageSchedule]
     num_persons: int
-    def __init__(self, sim_opts, seeds, obs_trajectories, reward_trajectories, strategy, num_persons) -> None: ...
+    def __init__(
+        self,
+        sim_opts,
+        seeds,
+        obs_trajectories,
+        reward_trajectories,
+        strategy,
+        num_persons,
+    ) -> None: ...
 
 class ExperimentDataLoader(ABC):
     def get_data(self) -> Sequence[ExperimentResult]: ...

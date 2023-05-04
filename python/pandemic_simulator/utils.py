@@ -6,15 +6,21 @@ from typing import Any, cast, Type, TypeVar, Dict, List
 import istype
 import numpy as np
 
-__all__ = ['required', 'abstract_class_property', 'checked_cast', 'shallow_asdict', 'cluster_into_random_sized_groups',
-           'integer_partitions']
+__all__ = [
+    "required",
+    "abstract_class_property",
+    "checked_cast",
+    "shallow_asdict",
+    "cluster_into_random_sized_groups",
+    "integer_partitions",
+]
 
-_T = TypeVar('_T')
+_T = TypeVar("_T")
 
 
 def required() -> _T:
     def required_err() -> Any:
-        raise ValueError('Missing required field')
+        raise ValueError("Missing required field")
 
     return cast(_T, dataclasses.field(default_factory=required_err))
 
@@ -40,15 +46,17 @@ def shallow_asdict(x: Any) -> Dict[str, Any]:
     return {field.name: getattr(x, field.name) for field in dataclasses.fields(x)}
 
 
-def cluster_into_random_sized_groups(orig_list: List[int],
-                                     min_group_size: int,
-                                     max_group_size: int,
-                                     numpy_rng: np.random.RandomState) -> List[List[int]]:
+def cluster_into_random_sized_groups(
+    orig_list: List[int],
+    min_group_size: int,
+    max_group_size: int,
+    numpy_rng: np.random.RandomState,
+) -> List[List[int]]:
     final_list = []
     cnt = 0
     while cnt < len(orig_list):
         size = numpy_rng.randint(min_group_size, max_group_size + 1)
-        final_list.append(orig_list[cnt: cnt + size])
+        final_list.append(orig_list[cnt : cnt + size])
         cnt += size
     return final_list
 

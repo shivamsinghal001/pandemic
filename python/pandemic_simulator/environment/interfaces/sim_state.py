@@ -11,7 +11,7 @@ from .pandemic_testing import GlobalTestingState
 from .person import PersonState
 from .sim_time import SimTime
 
-__all__ = ['PandemicSimState']
+__all__ = ["PandemicSimState"]
 
 
 @dataclass

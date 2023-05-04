@@ -2,7 +2,7 @@
 
 from enum import IntEnum
 
-__all__ = ['PandemicTestResult']
+__all__ = ["PandemicTestResult"]
 
 
 class PandemicTestResult(IntEnum):

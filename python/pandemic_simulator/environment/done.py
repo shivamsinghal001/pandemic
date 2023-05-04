@@ -6,8 +6,15 @@ from typing import Dict, List, Type, Union, Any
 
 import numpy as np
 
-__all__ = ['DoneFunctionType', 'DoneFunctionFactory', 'ORDone', 'DoneFunction',
-           'InfectionSummaryAboveThresholdDone', 'NoMoreInfectionsDone', 'NoPandemicDone']
+__all__ = [
+    "DoneFunctionType",
+    "DoneFunctionFactory",
+    "ORDone",
+    "DoneFunction",
+    "InfectionSummaryAboveThresholdDone",
+    "NoMoreInfectionsDone",
+    "NoPandemicDone",
+]
 
 from .interfaces import PandemicObservation, InfectionSummary, sorted_infection_summary
 
@@ -25,9 +32,9 @@ class DoneFunction(metaclass=ABCMeta):
 
 
 class DoneFunctionType(enum.Enum):
-    INFECTION_SUMMARY_ABOVE_THRESHOLD = 'infection_summary_above_threshold'
-    NO_MORE_INFECTIONS = 'no_more_infections'
-    NO_PANDEMIC = 'no_pandemic'
+    INFECTION_SUMMARY_ABOVE_THRESHOLD = "infection_summary_above_threshold"
+    NO_MORE_INFECTIONS = "no_more_infections"
+    NO_PANDEMIC = "no_pandemic"
     TIME_LIMIT = "time_limit"
 
     @staticmethod
@@ -43,16 +50,18 @@ def _register_done(type: DoneFunctionType, done_fun: Type[DoneFunction]) -> None
         _DONE_REGISTRY[type] = done_fun
         return
 
-    raise RuntimeError(f'Done type {type} already registered')
+    raise RuntimeError(f"Done type {type} already registered")
 
 
 class DoneFunctionFactory:
     @staticmethod
-    def default(done_function_type: Union[str, DoneFunctionType], *args: Any, **kwargs: Any) -> DoneFunction:
+    def default(
+        done_function_type: Union[str, DoneFunctionType], *args: Any, **kwargs: Any
+    ) -> DoneFunction:
         df_type = DoneFunctionType(done_function_type)
 
         if df_type not in _DONE_REGISTRY:
-            raise ValueError('Unknown done function type.')
+            raise ValueError("Unknown done function type.")
 
         return _DONE_REGISTRY[df_type](*args, **kwargs)
 
@@ -81,17 +90,30 @@ class ORDone(DoneFunction):
 
 class InfectionSummaryAboveThresholdDone(DoneFunction):
     """Returns True if the infection summary of the given type is above a threshold."""
+
     _threshold: float
     _index: int
 
-    def __init__(self, summary_type: InfectionSummary, threshold: float, *args: Any, **kwargs: Any):
+    def __init__(
+        self,
+        summary_type: InfectionSummary,
+        threshold: float,
+        *args: Any,
+        **kwargs: Any,
+    ):
         super().__init__(*args, **kwargs)
         self._threshold = threshold
-        assert summary_type in [InfectionSummary.INFECTED, InfectionSummary.CRITICAL, InfectionSummary.DEAD]
+        assert summary_type in [
+            InfectionSummary.INFECTED,
+            InfectionSummary.CRITICAL,
+            InfectionSummary.DEAD,
+        ]
         self._index = sorted_infection_summary.index(summary_type)
 
     def calculate_done(self, obs: PandemicObservation, action: int) -> bool:
-        return bool(np.any(obs.global_infection_summary[..., self._index] > self._threshold))
+        return bool(
+            np.any(obs.global_infection_summary[..., self._index] > self._threshold)
+        )
 
 
 class NoMoreInfectionsDone(DoneFunction):
@@ -100,13 +122,22 @@ class NoMoreInfectionsDone(DoneFunction):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self._infected_index = sorted_infection_summary.index(InfectionSummary.INFECTED)
-        self._recovered_index = sorted_infection_summary.index(InfectionSummary.RECOVERED)
+        self._recovered_index = sorted_infection_summary.index(
+            InfectionSummary.RECOVERED
+        )
         self._dead_index = sorted_infection_summary.index(InfectionSummary.DEAD)
         self._critical_index = sorted_infection_summary.index(InfectionSummary.CRITICAL)
         self._cnt = 0
 
     def calculate_done(self, obs: PandemicObservation, action: int) -> bool:
-        no_infection = np.sum(obs.global_infection_summary[..., [self._infected_index, self._critical_index]]) == 0
+        no_infection = (
+            np.sum(
+                obs.global_infection_summary[
+                    ..., [self._infected_index, self._critical_index]
+                ]
+            )
+            == 0
+        )
         if no_infection and self._cnt > 5:
             return True
         elif no_infection:
@@ -134,24 +165,29 @@ class NoPandemicDone(DoneFunction):
         self._num_days = num_days
 
     def calculate_done(self, obs: PandemicObservation, action: int) -> bool:
-        self._pandemic_exists = self._pandemic_exists or np.any(obs.infection_above_threshold)
+        self._pandemic_exists = self._pandemic_exists or np.any(
+            obs.infection_above_threshold
+        )
         return obs.time_day[-1].item() > self._num_days and not self._pandemic_exists
 
 
 class TimeLimitDone(DoneFunction):
     """Returns True if the number of days exceeds the threshold."""
 
-    _horizon: int 
+    _horizon: int
 
     def __init__(self, horizon: int = 128, *args: Any, **kwargs: Any):
         super().__init__()
-        self._horizon = horizon 
+        self._horizon = horizon
 
     def calculate_done(self, obs: PandemicObservation, action: int) -> bool:
-        return obs.state.sim_time.day > self._horizon 
+        return obs.state.sim_time.day > self._horizon
 
 
-_register_done(DoneFunctionType.INFECTION_SUMMARY_ABOVE_THRESHOLD, InfectionSummaryAboveThresholdDone)
+_register_done(
+    DoneFunctionType.INFECTION_SUMMARY_ABOVE_THRESHOLD,
+    InfectionSummaryAboveThresholdDone,
+)
 _register_done(DoneFunctionType.NO_MORE_INFECTIONS, NoMoreInfectionsDone)
 _register_done(DoneFunctionType.NO_PANDEMIC, NoPandemicDone)
 _register_done(DoneFunctionType.TIME_LIMIT, TimeLimitDone)

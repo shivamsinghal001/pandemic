@@ -11,10 +11,14 @@ class SpecialEndLoc(enum.Enum):
 
 class RoutineTrigger(metaclass=ABCMeta):
     @abstractmethod
-    def trigger(self, sim_time: SimTime, person_state: Optional[PersonState] = ...) -> bool: ...
+    def trigger(
+        self, sim_time: SimTime, person_state: Optional[PersonState] = ...
+    ) -> bool: ...
 
 class SimTimeRoutineTrigger(RoutineTrigger, SimTimeInterval):
-    def trigger(self, sim_time: SimTime, person_state: Optional[PersonState] = ...) -> bool: ...
+    def trigger(
+        self, sim_time: SimTime, person_state: Optional[PersonState] = ...
+    ) -> bool: ...
 
 class PersonRoutine:
     start_loc: Optional[LocationID]
@@ -26,7 +30,18 @@ class PersonRoutine:
     explore_probability: float
     duration_of_stay_at_end_loc: int
     reset_when_done_trigger: RoutineTrigger
-    def __init__(self, start_loc, end_loc, valid_time, start_trigger, start_hour_probability, explorable_end_locs, explore_probability, duration_of_stay_at_end_loc, reset_when_done_trigger) -> None: ...
+    def __init__(
+        self,
+        start_loc,
+        end_loc,
+        valid_time,
+        start_trigger,
+        start_hour_probability,
+        explorable_end_locs,
+        explore_probability,
+        duration_of_stay_at_end_loc,
+        reset_when_done_trigger,
+    ) -> None: ...
 
 class PersonRoutineWithStatus:
     routine: PersonRoutine
@@ -35,9 +50,13 @@ class PersonRoutineWithStatus:
     duration: int
     done: bool
     end_loc_selected: Optional[LocationID]
-    def sync(self, sim_time: SimTime, person_state: Optional[PersonState] = ...) -> None: ...
+    def sync(
+        self, sim_time: SimTime, person_state: Optional[PersonState] = ...
+    ) -> None: ...
     def reset(self) -> None: ...
-    def __init__(self, routine, due, started, duration, done, end_loc_selected) -> None: ...
+    def __init__(
+        self, routine, due, started, duration, done, end_loc_selected
+    ) -> None: ...
 
 class PersonRoutineAssignment(metaclass=ABCMeta):
     @property

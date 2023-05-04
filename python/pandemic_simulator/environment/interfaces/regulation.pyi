@@ -15,4 +15,18 @@ class PandemicRegulation:
     risk_to_avoid_gathering_size: Dict[Risk, int]
     risk_to_avoid_location_types: Optional[Dict[Risk, List[type]]]
     stage: int
-    def __init__(self, location_type_to_rule_kwargs, business_type_to_rule_kwargs, social_distancing, quarantine, quarantine_if_contact_positive, quarantine_if_household_quarantined, stay_home_if_sick, practice_good_hygiene, wear_facial_coverings, risk_to_avoid_gathering_size, risk_to_avoid_location_types, stage) -> None: ...
+    def __init__(
+        self,
+        location_type_to_rule_kwargs,
+        business_type_to_rule_kwargs,
+        social_distancing,
+        quarantine,
+        quarantine_if_contact_positive,
+        quarantine_if_household_quarantined,
+        stay_home_if_sick,
+        practice_good_hygiene,
+        wear_facial_coverings,
+        risk_to_avoid_gathering_size,
+        risk_to_avoid_location_types,
+        stage,
+    ) -> None: ...

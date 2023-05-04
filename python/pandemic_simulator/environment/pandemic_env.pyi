@@ -14,9 +14,32 @@ class PandemicGymEnv(gym.Env):
     constrain: Incomplete
     action_space: Incomplete
     four_start: Incomplete
-    def __init__(self, pandemic_sim: PandemicSim, pandemic_regulations: Sequence[PandemicRegulation], reward_fn: Optional[RewardFunction] = ..., true_reward_fn: Optional[RewardFunction] = ..., done_fn: Optional[DoneFunction] = ..., obs_history_size: int = ..., num_days_in_obs: int = ..., sim_steps_per_regulation: int = ..., non_essential_business_location_ids: Optional[List[LocationID]] = ..., constrain: bool = ..., four_start: bool = ...) -> None: ...
+    def __init__(
+        self,
+        pandemic_sim: PandemicSim,
+        pandemic_regulations: Sequence[PandemicRegulation],
+        reward_fn: Optional[RewardFunction] = ...,
+        true_reward_fn: Optional[RewardFunction] = ...,
+        done_fn: Optional[DoneFunction] = ...,
+        obs_history_size: int = ...,
+        num_days_in_obs: int = ...,
+        sim_steps_per_regulation: int = ...,
+        non_essential_business_location_ids: Optional[List[LocationID]] = ...,
+        constrain: bool = ...,
+        four_start: bool = ...,
+    ) -> None: ...
     @classmethod
-    def from_config(cls, sim_config: PandemicSimConfig, pandemic_regulations: Sequence[PandemicRegulation], sim_opts: PandemicSimOpts = ..., reward_fn: Optional[RewardFunction] = ..., done_fn: Optional[DoneFunction] = ..., obs_history_size: int = ..., num_days_in_obs: int = ..., non_essential_business_location_ids: Optional[List[LocationID]] = ...) -> PandemicGymEnv: ...
+    def from_config(
+        cls,
+        sim_config: PandemicSimConfig,
+        pandemic_regulations: Sequence[PandemicRegulation],
+        sim_opts: PandemicSimOpts = ...,
+        reward_fn: Optional[RewardFunction] = ...,
+        done_fn: Optional[DoneFunction] = ...,
+        obs_history_size: int = ...,
+        num_days_in_obs: int = ...,
+        non_essential_business_location_ids: Optional[List[LocationID]] = ...,
+    ) -> PandemicGymEnv: ...
     @property
     def pandemic_sim(self) -> PandemicSim: ...
     @property
@@ -35,4 +58,20 @@ class PandemicGymEnv(gym.Env):
 class PandemicPolicyGymEnv(PandemicGymEnv):
     def __init__(self, config=..., **kwargs) -> None: ...
     @classmethod
-    def from_config(cls, sim_config: PandemicSimConfig, pandemic_regulations: Sequence[PandemicRegulation], sim_opts: PandemicSimOpts = ..., reward_fn: Optional[RewardFunction] = ..., done_fn: Optional[DoneFunction] = ..., obs_history_size: int = ..., num_days_in_obs: int = ..., non_essential_business_location_ids: Optional[List[LocationID]] = ..., alpha: float = ..., beta: float = ..., gamma: float = ..., delta: float = ..., constrain: bool = ..., four_start: bool = ...) -> PandemicPolicyGymEnv: ...
+    def from_config(
+        cls,
+        sim_config: PandemicSimConfig,
+        pandemic_regulations: Sequence[PandemicRegulation],
+        sim_opts: PandemicSimOpts = ...,
+        reward_fn: Optional[RewardFunction] = ...,
+        done_fn: Optional[DoneFunction] = ...,
+        obs_history_size: int = ...,
+        num_days_in_obs: int = ...,
+        non_essential_business_location_ids: Optional[List[LocationID]] = ...,
+        alpha: float = ...,
+        beta: float = ...,
+        gamma: float = ...,
+        delta: float = ...,
+        constrain: bool = ...,
+        four_start: bool = ...,
+    ) -> PandemicPolicyGymEnv: ...

@@ -6,7 +6,7 @@ import numpy as np
 
 from ...environment import PandemicObservation
 
-__all__ = ['ExperimentDataSaver']
+__all__ = ["ExperimentDataSaver"]
 
 
 class ExperimentDataSaver(ABC):
@@ -16,7 +16,11 @@ class ExperimentDataSaver(ABC):
         """Begin a saving episode"""
         pass
 
-    def record(self, obs: PandemicObservation, reward: Optional[Union[np.ndarray, float]] = None) -> None:
+    def record(
+        self,
+        obs: PandemicObservation,
+        reward: Optional[Union[np.ndarray, float]] = None,
+    ) -> None:
         """Record data from obs and optionally a reward"""
         pass
 

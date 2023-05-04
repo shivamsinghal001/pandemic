@@ -4,11 +4,27 @@
 
 from typing import Sequence, Type
 
-from ..environment import LocationID, PersonRoutine, HairSalon, Restaurant, Bar, \
-    GroceryStore, RetailStore, triggered_routine, weekend_routine, social_routine, mid_day_during_week_routine, \
-    PersonRoutineAssignment, Person, Retired, Minor, Worker, Location
+from ..environment import (
+    LocationID,
+    PersonRoutine,
+    HairSalon,
+    Restaurant,
+    Bar,
+    GroceryStore,
+    RetailStore,
+    triggered_routine,
+    weekend_routine,
+    social_routine,
+    mid_day_during_week_routine,
+    PersonRoutineAssignment,
+    Person,
+    Retired,
+    Minor,
+    Worker,
+    Location,
+)
 
-__all__ = ['DefaultPersonRoutineAssignment']
+__all__ = ["DefaultPersonRoutineAssignment"]
 
 """
 References:
@@ -43,7 +59,7 @@ class DefaultPersonRoutineAssignment(PersonRoutineAssignment):
             triggered_routine(None, HairSalon, 30),
             weekend_routine(None, Restaurant, explore_probability=0.5),
             triggered_routine(home_id, Bar, 2, explore_probability=0.5),
-            social_routine(home_id)
+            social_routine(home_id),
         ]
         return routines
 
@@ -56,14 +72,16 @@ class DefaultPersonRoutineAssignment(PersonRoutineAssignment):
         return routines
 
     @staticmethod
-    def get_worker_outside_work_routines(home_id: LocationID) -> Sequence[PersonRoutine]:
+    def get_worker_outside_work_routines(
+        home_id: LocationID,
+    ) -> Sequence[PersonRoutine]:
         routines = [
             triggered_routine(None, GroceryStore, 7),
             triggered_routine(None, RetailStore, 7),
             triggered_routine(None, HairSalon, 30),
             weekend_routine(None, Restaurant, explore_probability=0.5),
             triggered_routine(home_id, Bar, 3, explore_probability=0.5),
-            social_routine(home_id)
+            social_routine(home_id),
         ]
         return routines
 
@@ -75,4 +93,6 @@ class DefaultPersonRoutineAssignment(PersonRoutineAssignment):
                 p.set_outside_school_routines(self.get_minor_routines(p.home, p.id.age))
             elif isinstance(p, Worker):
                 p.set_during_work_routines(self.get_worker_during_work_routines(p.work))
-                p.set_outside_work_routines(self.get_worker_outside_work_routines(p.home))
+                p.set_outside_work_routines(
+                    self.get_worker_outside_work_routines(p.home)
+                )

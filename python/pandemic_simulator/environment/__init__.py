@@ -22,9 +22,11 @@ from .simulator_config import *
 from .simulator_opts import *
 
 
-def init_globals(registry: Optional[Registry] = None,
-                 seed: Optional[int] = None,
-                 log: Optional[BoundLogger] = None) -> None:
+def init_globals(
+    registry: Optional[Registry] = None,
+    seed: Optional[int] = None,
+    log: Optional[BoundLogger] = None,
+) -> None:
     """
     Initialize globals for the simulator
 
@@ -36,4 +38,4 @@ def init_globals(registry: Optional[Registry] = None,
     globals.registry = registry or CityRegistry()
     globals.numpy_rng = np.random.RandomState(seed)
     if log:
-        log.info('Initialized globals for the simulator')
+        log.info("Initialized globals for the simulator")

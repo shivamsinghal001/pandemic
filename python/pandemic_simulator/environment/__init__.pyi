@@ -16,4 +16,8 @@ from .simulator_opts import *
 from structlog import BoundLogger as BoundLogger
 from typing import Optional
 
-def init_globals(registry: Optional[Registry] = ..., seed: Optional[int] = ..., log: Optional[BoundLogger] = ...) -> None: ...
+def init_globals(
+    registry: Optional[Registry] = ...,
+    seed: Optional[int] = ...,
+    log: Optional[BoundLogger] = ...,
+) -> None: ...

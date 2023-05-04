@@ -2,7 +2,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-__all__ = ['PandemicViz']
+__all__ = ["PandemicViz"]
 
 
 class PandemicViz(ABC):

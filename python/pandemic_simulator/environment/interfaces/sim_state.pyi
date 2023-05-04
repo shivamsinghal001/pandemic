@@ -22,4 +22,20 @@ class PandemicSimState:
     regulation_stage: int
     regulation_stage_sum: int
     sim_time: SimTime
-    def __init__(self, id_to_person_state, id_to_location_state, location_type_infection_summary, global_infection_summary, global_infection_summary_alpha, global_infection_summary_delta, global_testing_state, global_testing_state_alpha, global_testing_state_delta, global_location_summary, infection_above_threshold, regulation_stage, regulation_stage_sum, sim_time) -> None: ...
+    def __init__(
+        self,
+        id_to_person_state,
+        id_to_location_state,
+        location_type_infection_summary,
+        global_infection_summary,
+        global_infection_summary_alpha,
+        global_infection_summary_delta,
+        global_testing_state,
+        global_testing_state_alpha,
+        global_testing_state_delta,
+        global_location_summary,
+        infection_above_threshold,
+        regulation_stage,
+        regulation_stage_sum,
+        sim_time,
+    ) -> None: ...

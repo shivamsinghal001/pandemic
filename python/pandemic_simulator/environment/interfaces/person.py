@@ -12,16 +12,17 @@ from .pandemic_types import NoOP
 from .regulation import PandemicRegulation
 from .sim_time import SimTime
 
-__all__ = ['Person', 'PersonState', 'get_infection_summary']
+__all__ = ["Person", "PersonState", "get_infection_summary"]
 
 
 @dataclass
 class PersonState:
     """State of the person."""
+
     current_location: LocationID
     risk: Risk
     infection_state: Optional[IndividualInfectionState] = None
-    infection_spread_multiplier: float = 1.
+    infection_spread_multiplier: float = 1.0
 
     infection_state_delta: Optional[IndividualInfectionState] = None
     infection_spread_multiplier_delta: float = 1.5
@@ -32,31 +33,56 @@ class PersonState:
     sick_at_home: bool = field(init=False, default=False)
     avoid_gathering_size: int = field(init=False, default=-1)
 
-    test_result: PandemicTestResult = field(init=False, default=PandemicTestResult.UNTESTED)
-    test_result_alpha: PandemicTestResult = field(init=False, default=PandemicTestResult.UNTESTED)
-    test_result_delta: PandemicTestResult = field(init=False, default=PandemicTestResult.UNTESTED)
+    test_result: PandemicTestResult = field(
+        init=False, default=PandemicTestResult.UNTESTED
+    )
+    test_result_alpha: PandemicTestResult = field(
+        init=False, default=PandemicTestResult.UNTESTED
+    )
+    test_result_delta: PandemicTestResult = field(
+        init=False, default=PandemicTestResult.UNTESTED
+    )
 
     avoid_location_types: List[type] = field(default_factory=list, init=False)
-    not_infection_probability: float = field(default=1., init=False)
-    not_infection_probability_delta: float = field(default=1., init=False)
-    not_infection_probability_history: List[Tuple[LocationID, float]] = field(default_factory=list, init=False)
-    not_infection_probability_delta_history: List[Tuple[LocationID, float]] = field(default_factory=list, init=False)
+    not_infection_probability: float = field(default=1.0, init=False)
+    not_infection_probability_delta: float = field(default=1.0, init=False)
+    not_infection_probability_history: List[Tuple[LocationID, float]] = field(
+        default_factory=list, init=False
+    )
+    not_infection_probability_delta_history: List[Tuple[LocationID, float]] = field(
+        default_factory=list, init=False
+    )
 
 
 def get_infection_summary(person_state: PersonState) -> InfectionSummary:
-    if person_state.infection_state is not None or person_state.infection_state_delta is not None:
+    if (
+        person_state.infection_state is not None
+        or person_state.infection_state_delta is not None
+    ):
         state = cast(IndividualInfectionState, person_state.infection_state)
         state_delta = cast(IndividualInfectionState, person_state.infection_state_delta)
         if state_delta is None:
             return state.summary
-        if state.summary == InfectionSummary.NONE and state_delta.summary == InfectionSummary.NONE:
+        if (
+            state.summary == InfectionSummary.NONE
+            and state_delta.summary == InfectionSummary.NONE
+        ):
             return InfectionSummary.NONE
-        elif state.summary == InfectionSummary.DEAD or state_delta.summary == InfectionSummary.DEAD:
+        elif (
+            state.summary == InfectionSummary.DEAD
+            or state_delta.summary == InfectionSummary.DEAD
+        ):
             return InfectionSummary.DEAD
-        elif state.summary == InfectionSummary.CRITICAL or state_delta.summary == InfectionSummary.CRITICAL:
+        elif (
+            state.summary == InfectionSummary.CRITICAL
+            or state_delta.summary == InfectionSummary.CRITICAL
+        ):
             return InfectionSummary.CRITICAL
-        elif state.summary == InfectionSummary.INFECTED or state_delta.summary == InfectionSummary.INFECTED:
-            return InfectionSummary.INFECTED 
+        elif (
+            state.summary == InfectionSummary.INFECTED
+            or state_delta.summary == InfectionSummary.INFECTED
+        ):
+            return InfectionSummary.INFECTED
         else:
             return InfectionSummary.RECOVERED
     return None
@@ -66,7 +92,9 @@ class Person(ABC):
     """Class that implements a sim person automaton with a pre-defined policy."""
 
     @abstractmethod
-    def step(self, sim_time: SimTime, contact_tracer: Optional[ContactTracer] = None) -> Optional[NoOP]:
+    def step(
+        self, sim_time: SimTime, contact_tracer: Optional[ContactTracer] = None
+    ) -> Optional[NoOP]:
         """
         Method that steps through the person's policy. The step can return a
         NoOp to indicate no operation was carried out.

@@ -2,7 +2,7 @@
 
 from ..interfaces import globals, SimTimeTuple
 
-__all__ = ['get_work_time_for_24_7_open_locations']
+__all__ = ["get_work_time_for_24_7_open_locations"]
 
 
 def get_work_time_for_24_7_open_locations() -> SimTimeTuple:

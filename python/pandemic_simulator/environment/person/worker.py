@@ -3,10 +3,20 @@ from typing import Optional, Sequence, List
 
 from .base import BasePerson
 from .routine_utils import execute_routines
-from ..interfaces import PersonState, LocationID, SimTime, NoOP, SimTimeTuple, NOOP, PersonRoutine, \
-    ContactTracer, PersonID, PersonRoutineWithStatus
+from ..interfaces import (
+    PersonState,
+    LocationID,
+    SimTime,
+    NoOP,
+    SimTimeTuple,
+    NOOP,
+    PersonRoutine,
+    ContactTracer,
+    PersonID,
+    PersonRoutineWithStatus,
+)
 
-__all__ = ['Worker']
+__all__ = ["Worker"]
 
 
 class Worker(BasePerson):
@@ -19,13 +29,15 @@ class Worker(BasePerson):
     _during_work_rs: List[PersonRoutineWithStatus]
     _outside_work_rs: List[PersonRoutineWithStatus]
 
-    def __init__(self,
-                 person_id: PersonID,
-                 home: LocationID,
-                 work: LocationID,
-                 work_time: Optional[SimTimeTuple] = None,
-                 regulation_compliance_prob: float = 1.0,
-                 init_state: Optional[PersonState] = None):
+    def __init__(
+        self,
+        person_id: PersonID,
+        home: LocationID,
+        work: LocationID,
+        work_time: Optional[SimTimeTuple] = None,
+        regulation_compliance_prob: float = 1.0,
+        init_state: Optional[PersonState] = None,
+    ):
         """
         :param person_id: PersonID instance
         :param home: Home location id
@@ -36,16 +48,20 @@ class Worker(BasePerson):
         """
         assert person_id.age >= 18, "Workers's age must be >= 18"
         self._work = work
-        self._work_time = work_time or SimTimeTuple(hours=tuple(range(9, 18)), week_days=tuple(range(0, 5)))
+        self._work_time = work_time or SimTimeTuple(
+            hours=tuple(range(9, 18)), week_days=tuple(range(0, 5))
+        )
 
         self._routines = []
         self._during_work_rs = []
         self._outside_work_rs = []
 
-        super().__init__(person_id=person_id,
-                         home=home,
-                         regulation_compliance_prob=regulation_compliance_prob,
-                         init_state=init_state)
+        super().__init__(
+            person_id=person_id,
+            home=home,
+            regulation_compliance_prob=regulation_compliance_prob,
+            init_state=init_state,
+        )
 
     @property
     def work(self) -> LocationID:
@@ -80,14 +96,18 @@ class Worker(BasePerson):
         for rws in self._during_work_rs + self._outside_work_rs:
             rws.sync(sim_time=sim_time, person_state=self.state)
 
-    def step(self, sim_time: SimTime, contact_tracer: Optional[ContactTracer] = None) -> Optional[NoOP]:
+    def step(
+        self, sim_time: SimTime, contact_tracer: Optional[ContactTracer] = None
+    ) -> Optional[NoOP]:
         step_ret = super().step(sim_time, contact_tracer)
         if step_ret != NOOP:
             return step_ret
 
         if sim_time in self._work_time:
             # execute during work routines
-            ret = execute_routines(person=self, routines_with_status=self._during_work_rs)
+            ret = execute_routines(
+                person=self, routines_with_status=self._during_work_rs
+            )
             if ret != NOOP:
                 return ret
 
@@ -96,7 +116,9 @@ class Worker(BasePerson):
                 return None
         else:
             # execute outside work time routines
-            ret = execute_routines(person=self, routines_with_status=self._outside_work_rs)
+            ret = execute_routines(
+                person=self, routines_with_status=self._outside_work_rs
+            )
             if ret != NOOP:
                 return ret
 
