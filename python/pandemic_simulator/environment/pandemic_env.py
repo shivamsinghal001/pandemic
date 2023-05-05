@@ -93,7 +93,7 @@ class PandemicGymEnv(gym.Env):
         constrain: bool = False,
         four_start: bool = False,
         is_baseline=False,
-        baseline_policy=None,
+        baseline_policy="S0-4-0",
     ):
         """
         :param pandemic_sim: Pandemic simulator instance
@@ -123,15 +123,14 @@ class PandemicGymEnv(gym.Env):
         self._proxy_reward_fn = proxy_reward_fn
         self._is_baseline = is_baseline
         self._baseline_policy = baseline_policy
-        if self._is_baseline:
-            assert self._baseline_policy in baseline_policies
-            stages_to_execute = baseline_policies[self._baseline_policy]
-            self.stages = (
-                [StageSchedule(stage=stages_to_execute, end_day=None)]
-                if isinstance(stages_to_execute, int)
-                else stages_to_execute
-            )
-            self.stage_idx = 0
+        assert self._baseline_policy in baseline_policies
+        stages_to_execute = baseline_policies[self._baseline_policy]
+        self.stages = (
+            [StageSchedule(stage=stages_to_execute, end_day=None)]
+            if isinstance(stages_to_execute, int)
+            else stages_to_execute
+        )
+        self.stage_idx = 0
 
         self._done_fn = done_fn
 
@@ -252,17 +251,31 @@ class PandemicGymEnv(gym.Env):
         )
 
     def step(self, action: int) -> Tuple[PandemicObservation, float, bool, Dict]:
+        cur_stage = self.stages[self.stage_idx]
+        stage = cur_stage.stage
+        actual_stage = self._last_observation.stage[-1, 0, 0]
+        if (
+            cur_stage.end_day is not None
+            and self._last_observation.state is not None
+            and cur_stage.end_day <= self._last_observation.state.sim_time.day
+        ):
+            self.stage_idx += 1
+
+        if stage > actual_stage: # decrease
+            baseline_action = 0
+        elif stage==actual_stage: # do nothing
+            baseline_action = 1
+        elif stage < actual_stage: # increase
+            baseline_action = 2
+
         if self._is_baseline:
-            cur_stage = self.stages[self.stage_idx]
-            stage = cur_stage.stage
-            if (
-                cur_stage.end_day is not None
-                and cur_stage.end_day <= self._last_observation.state.sim_time.day
-            ):
-                self.stage_idx += 1
-            return self._step(stage)
+            obs, reward, done, info = self._step(baseline_action)
         else:
-            return self._step(action)
+            obs, reward, done, info = self._step(action)
+        
+        info[self._baseline_policy] = baseline_action
+
+        return obs, reward, done, info
 
     def _step(self, action: int) -> Tuple[PandemicObservation, float, bool, Dict]:
         # assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
@@ -399,8 +412,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             reward_fn = proxy_reward_fn
         else:
             reward_fn = true_reward_fn
-        is_baseline = config["is_baseline"]
-        baseline_policy = config["baseline_policy"]
+        is_baseline = config.get("is_baseline", False)
+        baseline_policy = config.get("baseline_policy", "S0-4-0")
         done_fn = config["done_fn"]
         obs_history_size = config["obs_history_size"]
         num_days_in_obs = config["num_days_in_obs"]
