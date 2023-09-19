@@ -323,11 +323,10 @@ class PoliticalReward(RewardFunction):
 
         stage = int(obs.stage[-1][-1].item() - prev_obs.stage[-1][-1].item())
         assert stage in [-1, 0, 1]
-        raise_stage_penalty = min(infection_rate - self._threshold, 0) / self._threshold
-        lower_stage_penalty = min(self._threshold - infection_rate, 0) / self._threshold
+        raise_stage_penalty = min(self._threshold - infection_rate, 0) / self._threshold
         return -(
             (stage == 1) * raise_stage_penalty**2
-        )  # + (stage == -1) * lower_stage_penalty ** 2)
+        )
 
 
 _register_reward(
