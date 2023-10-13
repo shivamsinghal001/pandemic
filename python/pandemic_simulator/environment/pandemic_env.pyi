@@ -1,6 +1,6 @@
 from typing import Dict, List, Optional, Sequence, Tuple
 
-import gym
+import gymnasium
 import numpy as np
 from _typeshed import Incomplete
 
@@ -11,7 +11,7 @@ from .reward import RewardFunction
 from .simulator_config import PandemicSimConfig
 from .simulator_opts import PandemicSimOpts
 
-class PandemicGymEnv(gym.Env):
+class PandemicGymEnv(gymnasium.Env):
     observation_space: Incomplete
     constrain: Incomplete
     action_space: Incomplete

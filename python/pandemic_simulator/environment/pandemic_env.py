@@ -3,10 +3,12 @@ import pdb
 from copy import deepcopy
 from typing import Dict, List, Mapping, Optional, Sequence, Tuple, Type
 
-import gym
+import gymnasium
 import numpy as np
-from gym import spaces
+from gymnasium import spaces
 from ray.rllib.env.multi_agent_env import make_multi_agent
+from ray.rllib.env.wrappers.multi_agent_env_compatibility import MultiAgentEnvCompatibility
+from gymnasium.wrappers import EnvCompatibility
 from ray.tune.registry import register_env
 
 from .interfaces import StageSchedule
@@ -63,8 +65,8 @@ baseline_policies = {
 }
 
 
-class PandemicGymEnv(gym.Env):
-    """A gym environment interface wrapper for the Pandemic Simulator."""
+class PandemicGymEnv(gymnasium.Env):
+    """A gymnasium environment interface wrapper for the Pandemic Simulator."""
 
     _pandemic_sim: PandemicSim
     _stage_to_regulation: Mapping[int, PandemicRegulation]
@@ -145,9 +147,9 @@ class PandemicGymEnv(gym.Env):
 
         self.constrain = constrain
         if self.constrain:
-            self.action_space = gym.spaces.Discrete(3)
+            self.action_space = gymnasium.spaces.Discrete(3)
         else:
-            self.action_space = gym.spaces.Discrete(len(self._stage_to_regulation))
+            self.action_space = gymnasium.spaces.Discrete(len(self._stage_to_regulation))
         self.four_start = four_start
 
     @classmethod
@@ -579,8 +581,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
         )
 
 
-register_env("pandemic_env", lambda config: PandemicPolicyGymEnv(config))
+register_env("pandemic_env", lambda config: EnvCompatibility(PandemicPolicyGymEnv(config)))
 register_env(
     "pandemic_env_multiagent",
-    make_multi_agent(lambda config: PandemicPolicyGymEnv(config)),
+    make_multi_agent(lambda config: MultiAgentEnvCompatibility(PandemicPolicyGymEnv(config))),
 )

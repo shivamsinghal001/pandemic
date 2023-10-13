@@ -194,7 +194,7 @@ austin_regulations: List[PandemicRegulation] = [
 # STAGE 3
 # On 9 March, ... In the evening, Conte announced in a press conference that all measures previously applied only in
 # the so-called "red zones" had been extended to the whole country, putting approximately 60 million people in lockdown.
-# The decree also established the closure of all gyms, swimming pools, spas and wellness centres. Shopping centres had
+# The decree also established the closure of all gymnasiums, swimming pools, spas and wellness centres. Shopping centres had
 # to be closed on weekends, while other commercial activities could remain open if a distance of one metre between
 # customers could be guaranteed.
 # The decree imposed the closure of museums, cultural centres and ski resorts ... and the closure of cinemas, theatres,
@@ -220,7 +220,7 @@ austin_regulations: List[PandemicRegulation] = [
 # On 13 May, Education Minister Lucia Azzolina announced schools would remain closed until September.
 # On 16 May, Conte announced the government plan for the easing of restrictions. Starting from 18 May most businesses
 # could reopen, and free movement was granted to all citizens within their Region; movement across Regions was still
-# banned for non-essential motives. Furthermore, on 25 May swimming pools and gyms could also reopen, and on 15 June
+# banned for non-essential motives. Furthermore, on 25 May swimming pools and gymnasiums could also reopen, and on 15 June
 # theatres and cinemas.
 italian_regulations: List[PandemicRegulation] = [
     PandemicRegulation(
