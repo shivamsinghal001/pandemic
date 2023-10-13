@@ -7,7 +7,6 @@ import gymnasium
 import numpy as np
 from gymnasium import spaces
 from ray.rllib.env.multi_agent_env import make_multi_agent
-from ray.rllib.env.wrappers.multi_agent_env_compatibility import MultiAgentEnvCompatibility
 from gymnasium.wrappers import EnvCompatibility
 from ray.tune.registry import register_env
 
@@ -584,5 +583,5 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
 register_env("pandemic_env", lambda config: EnvCompatibility(PandemicPolicyGymEnv(config)))
 register_env(
     "pandemic_env_multiagent",
-    make_multi_agent(lambda config: MultiAgentEnvCompatibility(PandemicPolicyGymEnv(config))),
+    make_multi_agent(lambda config: EnvCompatibility(PandemicPolicyGymEnv(config))),
 )
