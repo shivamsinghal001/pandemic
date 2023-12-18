@@ -49,17 +49,17 @@ class CityRegistry(Registry):
         self._person_type_to_count = dict()
 
     def register_location(self, location: Location) -> None:
-        if location.id in self._location_register:
-            raise RegistrationError(
-                f"Location {location.id.name} is already registered."
-            )
-        self._location_register[location.id] = location
-        self._location_ids.add(location.id)
-        if isinstance(location.state, BusinessLocationState):
-            self._business_location_ids.add(location.id)
+        if location.id not in self._location_register:
+            # raise RegistrationError(
+            #     f"Location {location.id.name} is already registered."
+            # )
+            self._location_register[location.id] = location
+            self._location_ids.add(location.id)
+            if isinstance(location.state, BusinessLocationState):
+                self._business_location_ids.add(location.id)
 
-        if type(location) not in self.IGNORE_LOCS_SUMMARY:
-            self._location_types.add(type(location).__name__)
+            if type(location) not in self.IGNORE_LOCS_SUMMARY:
+                self._location_types.add(type(location).__name__)
 
     def register_person(self, person: Person) -> None:
         if person.id in self._person_register:

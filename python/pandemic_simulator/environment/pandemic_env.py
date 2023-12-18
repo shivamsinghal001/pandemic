@@ -7,7 +7,6 @@ import gymnasium
 import numpy as np
 from gymnasium import spaces
 from ray.rllib.env.multi_agent_env import make_multi_agent
-from gymnasium.wrappers import EnvCompatibility
 from ray.tune.registry import register_env
 
 from .interfaces import StageSchedule
@@ -270,13 +269,14 @@ class PandemicGymEnv(gymnasium.Env):
             baseline_action = 2
 
         if self._is_baseline:
-            obs, reward, done, info = self._step(baseline_action)
+            obs, reward, done, terminated, info = self._step(baseline_action)
         else:
-            obs, reward, done, info = self._step(action)
+            obs, reward, done, terminated, info = self._step(action)
+
         
         info[self._baseline_policy] = baseline_action
 
-        return obs, reward, done, info
+        return obs, reward, done, terminated, info
 
     def _step(self, action: int) -> Tuple[PandemicObservation, float, bool, Dict]:
         # assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
@@ -359,6 +359,7 @@ class PandemicGymEnv(gymnasium.Env):
             self._obs_with_history,
             self._last_reward,
             done,
+            False,
             {
                 "rew": self._last_reward,
                 "true_rew": self._last_true_reward,
@@ -369,7 +370,7 @@ class PandemicGymEnv(gymnasium.Env):
             },
         )
 
-    def reset(self) -> np.ndarray:
+    def reset(self, *, seed=None, options=None):
         self._pandemic_sim.reset()
         self._last_reward = 0.0
         self._last_true_reward = 0.0
@@ -392,9 +393,9 @@ class PandemicGymEnv(gymnasium.Env):
         )
 
         if self.four_start:
-            return self.step(4)[0]
+            return self.step(4)[0], {}
         else:
-            return self._obs_with_history
+            return self._obs_with_history, {}
 
     def render(self, mode: str = "human") -> bool:
         pass
@@ -580,8 +581,3 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
         )
 
 
-register_env("pandemic_env", lambda config: EnvCompatibility(PandemicPolicyGymEnv(config)))
-register_env(
-    "pandemic_env_multiagent",
-    make_multi_agent(lambda config: EnvCompatibility(PandemicPolicyGymEnv(config))),
-)
