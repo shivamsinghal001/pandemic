@@ -269,14 +269,13 @@ class PandemicGymEnv(gymnasium.Env):
             baseline_action = 2
 
         if self._is_baseline:
-            obs, reward, done, terminated, info = self._step(baseline_action)
+            obs, reward, terminated, truncated, info = self._step(baseline_action)
         else:
-            obs, reward, done, terminated, info = self._step(action)
+            obs, reward, terminated, truncated, info = self._step(action)
 
-        
         info[self._baseline_policy] = baseline_action
 
-        return obs, reward, done, terminated, info
+        return obs, reward, terminated, truncated, info
 
     def _step(self, action: int) -> Tuple[PandemicObservation, float, bool, Dict]:
         # assert self.action_space.contains(action), "%r (%s) invalid" % (action, type(action))
@@ -347,7 +346,7 @@ class PandemicGymEnv(gymnasium.Env):
             if self._proxy_reward_fn is not None
             else 0.0
         )
-        done = self._done_fn.calculate_done(obs, action) if self._done_fn else False
+        terminated = self._done_fn.calculate_done(obs, action) if self._done_fn else False
         self._last_observation = obs
         self._obs_with_history = np.concatenate(
             [
@@ -358,7 +357,7 @@ class PandemicGymEnv(gymnasium.Env):
         return (
             self._obs_with_history,
             self._last_reward,
-            done,
+            terminated,
             False,
             {
                 "rew": self._last_reward,
