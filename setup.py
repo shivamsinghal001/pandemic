@@ -16,7 +16,6 @@ setup(
                   'pandemic_simulator': ['py.typed']},
     install_requires=[
         'dataclasses',
-        'gym>=0.15.4',
         'istype>=0.2.0',
         'matplotlib',
         'networkx',  # for graph analysis
@@ -26,8 +25,7 @@ setup(
         'pyrsistent>=0.15.5',  # for frozen classes
         'pytest>=5.2.2',
         'PyYAML>=5.3.1',
-        'typing-inspect==0.5.0',  # to handle issubclass changes in python 3.7,
-
+        'typing-inspect>=0.5.0',  # to handle issubclass changes in python 3.7,
         'orderedset>=2.0.3',
         'cachetools>=4.1.0',
         'h5py>=2.10.0',
