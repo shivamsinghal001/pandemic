@@ -4,7 +4,7 @@
 from dataclasses import dataclass, field
 from typing import Set
 
-from orderedset import OrderedSet
+from ordered_set import OrderedSet
 
 from .ids import PersonID
 from .sim_time import SimTimeTuple

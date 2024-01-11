@@ -26,11 +26,10 @@ setup(
         'pytest>=5.2.2',
         'PyYAML>=5.3.1',
         'typing-inspect>=0.5.0',  # to handle issubclass changes in python 3.7,
-        'orderedset>=2.0.3',
+        'ordered-set',
         'cachetools>=4.1.0',
         'h5py>=2.10.0',
         'tqdm>=4.48.0',
-        'GPyOpt',
         'pandas',
         'structlog'
     ],

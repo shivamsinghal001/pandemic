@@ -6,7 +6,7 @@ from itertools import product as cartesianproduct
 from typing import DefaultDict, Dict, List, Optional, Sequence, Type, cast
 
 import numpy as np
-from orderedset import OrderedSet
+from ordered_set import OrderedSet
 
 from .contact_tracing import MaxSlotContactTracer
 from .infection_model import SEIRModel, SpreadProbabilityParams

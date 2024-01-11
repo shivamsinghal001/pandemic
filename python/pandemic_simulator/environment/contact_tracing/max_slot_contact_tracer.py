@@ -3,7 +3,7 @@
 from typing import Dict, FrozenSet, List, Mapping, Set
 
 import numpy as np
-from orderedset import OrderedSet
+from ordered_set import OrderedSet
 
 from ..interfaces import ContactTracer, PersonID
 
