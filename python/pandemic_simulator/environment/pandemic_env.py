@@ -23,7 +23,7 @@ from .simulator_opts import PandemicSimOpts
 
 __all__ = ["PandemicGymEnv", "PandemicPolicyGymEnv"]
 
-baseline_policies = {
+safe_policies = {
     "S0": 0,
     "S1": 1,
     "S2": 2,
@@ -92,8 +92,8 @@ class PandemicGymEnv(gymnasium.Env):
         non_essential_business_location_ids: Optional[List[LocationID]] = None,
         constrain: bool = False,
         four_start: bool = False,
-        is_baseline=False,
-        baseline_policy="S0-4-0",
+        is_safe_policy=False,
+        safe_policy="S0-4-0",
     ):
         """
         :param pandemic_sim: Pandemic simulator instance
@@ -121,10 +121,10 @@ class PandemicGymEnv(gymnasium.Env):
         self._reward_fn = reward_fn
         self._true_reward_fn = true_reward_fn
         self._proxy_reward_fn = proxy_reward_fn
-        self._is_baseline = is_baseline
-        self._baseline_policy = baseline_policy
-        assert self._baseline_policy in baseline_policies
-        stages_to_execute = baseline_policies[self._baseline_policy]
+        self._is_safe_policy = is_safe_policy
+        self._safe_policy = safe_policy
+        assert self._safe_policy in safe_policies
+        stages_to_execute = safe_policies[self._safe_policy]
         self.stages = (
             [StageSchedule(stage=stages_to_execute, end_day=None)]
             if isinstance(stages_to_execute, int)
@@ -262,18 +262,18 @@ class PandemicGymEnv(gymnasium.Env):
             self.stage_idx += 1
 
         if stage > actual_stage: # decrease
-            baseline_action = 0
+            safe_policy_action = 0
         elif stage==actual_stage: # do nothing
-            baseline_action = 1
+            safe_policy_action = 1
         elif stage < actual_stage: # increase
-            baseline_action = 2
+            safe_policy_action = 2
 
-        if self._is_baseline:
-            obs, reward, terminated, truncated, info = self._step(baseline_action)
+        if self._is_safe_policy:
+            obs, reward, terminated, truncated, info = self._step(safe_policy_action)
         else:
             obs, reward, terminated, truncated, info = self._step(action)
 
-        info[self._baseline_policy] = baseline_action
+        info[self._safe_policy_policy] = safe_policy_action
 
         return obs, reward, terminated, truncated, info
 
@@ -413,8 +413,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             reward_fn = proxy_reward_fn
         else:
             reward_fn = true_reward_fn
-        is_baseline = config.get("is_baseline", False)
-        baseline_policy = config.get("baseline_policy", "S0-4-0")
+        is_safe_policy = config.get("is_safe_policy", False)
+        safe_policy = config.get("safe_policy", "S0-4-0")
         done_fn = config["done_fn"]
         obs_history_size = config["obs_history_size"]
         num_days_in_obs = config["num_days_in_obs"]
@@ -456,8 +456,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             non_essential_business_location_ids,
             constrain,
             four_start,
-            is_baseline,
-            baseline_policy,
+            is_safe_policy,
+            safe_policy,
         )
 
     @classmethod
