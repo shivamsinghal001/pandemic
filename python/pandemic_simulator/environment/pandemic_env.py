@@ -579,4 +579,8 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             four_start=four_start,
         )
 
+register_env(
+    "pandemic_env_multiagent",
+    make_multi_agent(lambda config: PandemicPolicyGymEnv(config)),
+)
 
