@@ -273,7 +273,7 @@ class PandemicGymEnv(gymnasium.Env):
         else:
             obs, reward, terminated, truncated, info = self._step(action)
 
-        info[self._safe_policy_policy] = safe_policy_action
+        info[self._safe_policy] = safe_policy_action
 
         return obs, reward, terminated, truncated, info
 
