@@ -92,7 +92,7 @@ class PandemicGymEnv(gymnasium.Env):
         non_essential_business_location_ids: Optional[List[LocationID]] = None,
         constrain: bool = False,
         four_start: bool = False,
-        is_safe_policy=False,
+        use_safe_policy_actions=False,
         safe_policy="S0-4-0",
     ):
         """
@@ -121,7 +121,7 @@ class PandemicGymEnv(gymnasium.Env):
         self._reward_fn = reward_fn
         self._true_reward_fn = true_reward_fn
         self._proxy_reward_fn = proxy_reward_fn
-        self._is_safe_policy = is_safe_policy
+        self._use_safe_policy_actions = use_safe_policy_actions
         self._safe_policy = safe_policy
         assert self._safe_policy in safe_policies
         stages_to_execute = safe_policies[self._safe_policy]
@@ -268,7 +268,7 @@ class PandemicGymEnv(gymnasium.Env):
         elif stage < actual_stage: # increase
             safe_policy_action = 2
 
-        if self._is_safe_policy:
+        if self._use_safe_policy_actions:
             obs, reward, terminated, truncated, info = self._step(safe_policy_action)
         else:
             obs, reward, terminated, truncated, info = self._step(action)
@@ -413,7 +413,7 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             reward_fn = proxy_reward_fn
         else:
             reward_fn = true_reward_fn
-        is_safe_policy = config.get("is_safe_policy", False)
+        use_safe_policy_actions = config.get("use_safe_policy_actions", False)
         safe_policy = config.get("safe_policy", "S0-4-0")
         done_fn = config["done_fn"]
         obs_history_size = config["obs_history_size"]
@@ -456,7 +456,7 @@ class PandemicPolicyGymEnv(PandemicGymEnv):
             non_essential_business_location_ids,
             constrain,
             four_start,
-            is_safe_policy,
+            use_safe_policy_actions,
             safe_policy,
         )
 
